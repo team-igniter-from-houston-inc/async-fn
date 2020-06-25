@@ -1,18 +1,13 @@
-const setImmediatePromise = () =>
-  new Promise((resolve) => {
-    setImmediate(resolve);
-  });
-
-export default () => {
+export default ({ getFn, flushPendingPromises }) => () => {
   const callStack = [];
-  const asyncFn = jest.fn();
+  const asyncFn = getFn();
 
   asyncFn.resolveLastCall = (...rest) => {
     const lastCall = callStack.pop();
 
     if (!lastCall) {
       throw new Error(
-        "Tried to resolve an asyncFn call that has not been made yet."
+        'Tried to resolve an asyncFn call that has not been made yet.',
       );
     }
 
@@ -24,7 +19,7 @@ export default () => {
 
     if (!lastCall) {
       throw new Error(
-        "Tried to reject an asyncFn call that has not been made yet."
+        'Tried to reject an asyncFn call that has not been made yet.',
       );
     }
 
@@ -36,7 +31,7 @@ export default () => {
 
     if (!firstCall) {
       throw new Error(
-        "Tried to resolve an asyncFn call that has not been made yet."
+        'Tried to resolve an asyncFn call that has not been made yet.',
       );
     }
 
@@ -55,11 +50,11 @@ export default () => {
     callStack.push({
       resolve: (...rest) => {
         resolve(...rest);
-        return setImmediatePromise();
+        return flushPendingPromises();
       },
       reject: (...rest) => {
         reject(...rest);
-        return setImmediatePromise();
+        return flushPendingPromises();
       },
     });
 

@@ -1,7 +1,11 @@
-import asyncFn from './asyncFn';
+import asyncFn from './asyncFnForJest';
 
-describe('asyncFn', () => {
-  it('returns a Jest mock function', () => {
+describe('asyncFn for jest', () => {
+  beforeEach(() => {
+    jest.useFakeTimers('modern');
+  });
+
+  it('returns a Jest mock function', async () => {
     const mockFunction = asyncFn();
 
     expect(jest.isMockFunction(mockFunction));
@@ -71,7 +75,7 @@ describe('asyncFn', () => {
 
       it('resolves using the mock function used to create the promise itself', async () => {
         let actual;
-        promise.then(x => {
+        promise.then((x) => {
           actual = x;
         });
 
@@ -83,7 +87,7 @@ describe('asyncFn', () => {
       it('does not resolve without using the mock function', () => {
         let actual;
 
-        promise.then(x => {
+        promise.then((x) => {
           actual = x;
         });
 
@@ -92,10 +96,11 @@ describe('asyncFn', () => {
 
       it('resolves multiple levels of chained then-calls containing synchronous functions', async () => {
         let actual;
+
         promise
-          .then(x => x)
-          .then(x => x)
-          .then(x => {
+          .then((x) => x)
+          .then((x) => x)
+          .then((x) => {
             actual = x;
           });
 
@@ -107,9 +112,9 @@ describe('asyncFn', () => {
       it('resolves chained then-calls containing an already resolved native promise', async () => {
         let actual;
         promise
-          .then(x => x)
-          .then(x => Promise.resolve(x))
-          .then(x => {
+          .then((x) => x)
+          .then((x) => Promise.resolve(x))
+          .then((x) => {
             actual = x;
           });
 
@@ -121,11 +126,11 @@ describe('asyncFn', () => {
       it('does not resolve all the way in chained then-calls if a non-resolved native promise is encountered', async () => {
         let actual;
         promise
-          .then(x => x)
-          .then(x => {
+          .then((x) => x)
+          .then((x) => {
             actual = x;
           })
-          .then(() => new Promise(x => {}))
+          .then(() => new Promise((x) => {}))
           .then(() => {
             actual = 'Unwanted value';
           });
@@ -141,11 +146,11 @@ describe('asyncFn', () => {
         return expect(promise).resolves.toBe('foo');
       });
 
-      it('resolves so that asynchronous Jest asserts work using the done-function', done => {
+      it('resolves so that asynchronous Jest asserts work using the done-function', (done) => {
         mockFunction.resolveLastCall('foo');
 
         promise
-          .then(value => {
+          .then((value) => {
             expect(value).toBe('foo');
           })
           .then(done);
@@ -158,8 +163,8 @@ describe('asyncFn', () => {
         expect(actual).toBe('foo');
       });
 
-      it('rejects with error', done => {
-        promise.catch(e => {
+      it('rejects with error', (done) => {
+        promise.catch((e) => {
           expect(e).toBe('some rejection');
           done();
         });
