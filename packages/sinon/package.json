@@ -13,5 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "@async-fn/core": "0.0.1"
+  },
+  "peerDependencies": {
+    "sinon": "^9.0.2"
   }
 }
