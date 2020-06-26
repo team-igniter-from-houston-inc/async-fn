@@ -1,6 +1,28 @@
 export default ({ getFn, flushPendingPromises }) => () => {
   const callStack = [];
-  const asyncFn = getFn();
+
+  const asyncFn = getFn(() => {
+    let resolve;
+    let reject;
+
+    const callPromise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+
+    callStack.push({
+      resolve: (...rest) => {
+        resolve(...rest);
+        return flushPendingPromises();
+      },
+      reject: (...rest) => {
+        reject(...rest);
+        return flushPendingPromises();
+      },
+    });
+
+    return callPromise;
+  });
 
   asyncFn.resolveLastCall = (...rest) => {
     const lastCall = callStack.pop();
@@ -37,29 +59,6 @@ export default ({ getFn, flushPendingPromises }) => () => {
 
     return firstCall.resolve(...rest);
   };
-
-  asyncFn.mockImplementation(() => {
-    let resolve;
-    let reject;
-
-    const callPromise = new Promise((res, rej) => {
-      resolve = res;
-      reject = rej;
-    });
-
-    callStack.push({
-      resolve: (...rest) => {
-        resolve(...rest);
-        return flushPendingPromises();
-      },
-      reject: (...rest) => {
-        reject(...rest);
-        return flushPendingPromises();
-      },
-    });
-
-    return callPromise;
-  });
 
   return asyncFn;
 };

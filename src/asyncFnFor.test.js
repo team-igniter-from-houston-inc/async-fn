@@ -1,36 +1,28 @@
-import asyncFn from './asyncFnForJest';
+import asyncFnForJest from './asyncFnForJest';
+import asyncFnForSinon from './asyncFnForSinon';
+import sinon from 'sinon';
 
-describe('asyncFn for jest', () => {
-  beforeEach(() => {
-    jest.useFakeTimers('modern');
-  });
-
-  it('returns a Jest mock function', async () => {
-    const mockFunction = asyncFn();
-
-    expect(jest.isMockFunction(mockFunction));
-  });
-
-  describe('the mock function', () => {
-    let mockFunction;
+const itWorksAsAsyncFn = (asyncFn) => {
+  describe('when a mock function instance is created', () => {
+    let mockFunctionInstance;
 
     beforeEach(() => {
-      mockFunction = asyncFn();
+      mockFunctionInstance = asyncFn();
     });
 
     it('returns a promise (or at least a thenable)', () => {
-      expect(mockFunction().then).toEqual(expect.any(Function));
+      expect(mockFunctionInstance().then).toEqual(expect.any(Function));
     });
 
     it('given not called, when still tried to reject last call, throws', () => {
       expect(() => {
-        mockFunction.rejectLastCall();
+        mockFunctionInstance.rejectLastCall();
       }).toThrow('Tried to reject an asyncFn call that has not been made yet.');
     });
 
     it('given not called, when still tried to resolve last call, throws', () => {
       expect(() => {
-        mockFunction.resolveLastCall();
+        mockFunctionInstance.resolveLastCall();
       }).toThrow(
         'Tried to resolve an asyncFn call that has not been made yet.',
       );
@@ -38,20 +30,20 @@ describe('asyncFn for jest', () => {
 
     it('given not called, when still tried to resolve first call, throws', () => {
       expect(() => {
-        mockFunction.resolveFirstUnresolvedCall();
+        mockFunctionInstance.resolveFirstUnresolvedCall();
       }).toThrow(
         'Tried to resolve an asyncFn call that has not been made yet.',
       );
     });
 
     it('given called multiple times, when resolved multiple times, all returned promises resolve with resolution specific values', async () => {
-      const firstPromise = mockFunction();
-      const secondPromise = mockFunction();
-      const thirdPromise = mockFunction();
+      const firstPromise = mockFunctionInstance();
+      const secondPromise = mockFunctionInstance();
+      const thirdPromise = mockFunctionInstance();
 
-      mockFunction.resolveFirstUnresolvedCall('some-first-value');
-      mockFunction.resolveFirstUnresolvedCall('some-second-value');
-      mockFunction.resolveFirstUnresolvedCall('some-third-value');
+      mockFunctionInstance.resolveFirstUnresolvedCall('some-first-value');
+      mockFunctionInstance.resolveFirstUnresolvedCall('some-second-value');
+      mockFunctionInstance.resolveFirstUnresolvedCall('some-third-value');
 
       const results = await Promise.all([
         firstPromise,
@@ -70,7 +62,7 @@ describe('asyncFn for jest', () => {
       let promise;
 
       beforeEach(() => {
-        promise = mockFunction();
+        promise = mockFunctionInstance();
       });
 
       it('resolves using the mock function used to create the promise itself', async () => {
@@ -79,7 +71,7 @@ describe('asyncFn for jest', () => {
           actual = x;
         });
 
-        await mockFunction.resolveLastCall('foo');
+        await mockFunctionInstance.resolveLastCall('foo');
 
         expect(actual).toBe('foo');
       });
@@ -104,7 +96,7 @@ describe('asyncFn for jest', () => {
             actual = x;
           });
 
-        await mockFunction.resolveLastCall('foo');
+        await mockFunctionInstance.resolveLastCall('foo');
 
         expect(actual).toBe('foo');
       });
@@ -118,7 +110,7 @@ describe('asyncFn for jest', () => {
             actual = x;
           });
 
-        await mockFunction.resolveLastCall('foo');
+        await mockFunctionInstance.resolveLastCall('foo');
 
         expect(actual).toBe('foo');
       });
@@ -135,19 +127,19 @@ describe('asyncFn for jest', () => {
             actual = 'Unwanted value';
           });
 
-        await mockFunction.resolveLastCall('foo');
+        await mockFunctionInstance.resolveLastCall('foo');
 
         expect(actual).toBe('foo');
       });
 
       it('resolves so that asynchronous Jest asserts work using returned promise', () => {
-        mockFunction.resolveLastCall('foo');
+        mockFunctionInstance.resolveLastCall('foo');
 
         return expect(promise).resolves.toBe('foo');
       });
 
       it('resolves so that asynchronous Jest asserts work using the done-function', (done) => {
-        mockFunction.resolveLastCall('foo');
+        mockFunctionInstance.resolveLastCall('foo');
 
         promise
           .then((value) => {
@@ -157,7 +149,7 @@ describe('asyncFn for jest', () => {
       });
 
       it('resolves so that async/await works', async () => {
-        mockFunction.resolveLastCall('foo');
+        mockFunctionInstance.resolveLastCall('foo');
 
         const actual = await promise;
         expect(actual).toBe('foo');
@@ -169,8 +161,64 @@ describe('asyncFn for jest', () => {
           done();
         });
 
-        mockFunction.rejectLastCall('some rejection');
+        mockFunctionInstance.rejectLastCall('some rejection');
       });
     });
+  });
+};
+
+describe('asyncFn with jest mocks', () => {
+  it('returns a Jest mock function', async () => {
+    const mockFunctionInstance = asyncFnForJest();
+
+    expect(jest.isMockFunction(mockFunctionInstance));
+  });
+
+  describe('given "modern" fake timers', () => {
+    beforeEach(() => {
+      jest.useFakeTimers('modern');
+    });
+
+    itWorksAsAsyncFn(asyncFnForJest);
+  });
+
+  describe('given "legacy" fake timers', () => {
+    beforeEach(() => {
+      jest.useFakeTimers('legacy');
+    });
+
+    itWorksAsAsyncFn(asyncFnForJest);
+  });
+
+  describe('given real fake timers', () => {
+    beforeEach(() => {
+      jest.useRealTimers();
+    });
+
+    itWorksAsAsyncFn(asyncFnForJest);
+  });
+
+  describe('given no timers', () => {
+    itWorksAsAsyncFn(asyncFnForJest);
+  });
+});
+
+describe('asyncFn with sinon spies', () => {
+  it('returns a sinon spy function', async () => {
+    const mockFunctionInstance = asyncFnForSinon();
+
+    expect(mockFunctionInstance.constructor).toBe(sinon.spy().constructor);
+  });
+
+  describe('given fake timers', () => {
+    beforeEach(() => {
+      sinon.useFakeTimers();
+    });
+
+    itWorksAsAsyncFn(asyncFnForSinon);
+  });
+
+  describe('given no timers', () => {
+    itWorksAsAsyncFn(asyncFnForSinon);
   });
 });
