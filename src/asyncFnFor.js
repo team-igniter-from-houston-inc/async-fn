@@ -1,4 +1,6 @@
-export default ({ getFn, flushPendingPromises }) => () => {
+import { setImmediate as flushMicroTasks } from 'timers';
+
+export default ({ getFn }) => () => {
   const callStack = [];
 
   const asyncFn = getFn(() => {
@@ -13,11 +15,11 @@ export default ({ getFn, flushPendingPromises }) => () => {
     callStack.push({
       resolve: (...rest) => {
         resolve(...rest);
-        return flushPendingPromises();
+        return flushMicroAndMacroTasks();
       },
       reject: (...rest) => {
         reject(...rest);
-        return flushPendingPromises();
+        return flushMicroAndMacroTasks();
       },
     });
 
@@ -62,3 +64,5 @@ export default ({ getFn, flushPendingPromises }) => () => {
 
   return asyncFn;
 };
+
+const flushMicroAndMacroTasks = () => new Promise(flushMicroTasks);
