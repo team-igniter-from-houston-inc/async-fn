@@ -1,7 +1,13 @@
 import flushMicroAndMacroTasks from './flushMicroAndMacroTasks';
 
 export default (asyncFn) => {
-  describe('when a mock function instance is created', () => {
+  it('when a mock function instance is created with arguments, throws', () => {
+    expect(() => asyncFn('some-argument')).toThrow(
+      'Using a mock implementation with asyncFn is not supported for making no sense.',
+    );
+  });
+
+  describe('when a mock function instance is created without arguments', () => {
     let mockFunctionInstance;
 
     beforeEach(() => {
@@ -124,7 +130,9 @@ export default (asyncFn) => {
 
         await mockFunctionInstance.resolveLastCall('some-value');
 
-        expect(callbackBeforeNonResolvedPromise).toHaveBeenCalledWith('some-value');
+        expect(callbackBeforeNonResolvedPromise).toHaveBeenCalledWith(
+          'some-value',
+        );
         expect(callbackAfterNonResolvedPromise).not.toHaveBeenCalled();
       });
 

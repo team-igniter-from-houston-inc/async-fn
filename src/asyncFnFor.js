@@ -1,6 +1,11 @@
 import flushMicroAndMacroTasks from './flushMicroAndMacroTasks';
+import mockImplementationUsageErrorMessage from './mockImplementationUsageErrorMessage';
 
-export default ({ getFn }) => () => {
+export default ({ getFn }) => (...args) => {
+  if (args.length > 0) {
+    throw new Error(mockImplementationUsageErrorMessage);
+  }
+
   const callStack = [];
 
   const asyncFn = getFn(() => {
