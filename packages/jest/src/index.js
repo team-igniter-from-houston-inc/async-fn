@@ -1,3 +1,3 @@
 import asyncFnForJest from './asyncFnForJest';
 
-export { asyncFnForJest };
+export default asyncFnForJest;

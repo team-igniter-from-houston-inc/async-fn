@@ -1,3 +1,3 @@
 import asyncFnForSinon from './asyncFnForSinon';
 
-export { asyncFnForSinon };
+export default asyncFnForSinon;
