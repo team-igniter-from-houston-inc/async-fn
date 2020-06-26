@@ -46,8 +46,6 @@ describe('asyncFn with jest mocks', () => {
     it(`when setting mock implementation with "${restrictedMethodName}", throws`, () => {
       const mockFunctionInstance = asyncFnForJest();
 
-      // console.log(Object.keys(mockFunctionInstance));
-
       expect(
         () => void mockFunctionInstance[restrictedMethodName](() => {}),
       ).toThrow(
