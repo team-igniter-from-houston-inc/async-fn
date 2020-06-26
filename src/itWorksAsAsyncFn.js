@@ -1,8 +1,6 @@
-import asyncFnForJest from './asyncFnForJest';
-import asyncFnForSinon from './asyncFnForSinon';
-import sinon from 'sinon';
+import flushMicroAndMacroTasks from './flushMicroAndMacroTasks';
 
-const itWorksAsAsyncFn = (asyncFn) => {
+export default (asyncFn) => {
   describe('when a mock function instance is created', () => {
     let mockFunctionInstance;
 
@@ -76,14 +74,13 @@ const itWorksAsAsyncFn = (asyncFn) => {
         expect(actual).toBe('foo');
       });
 
-      it('does not resolve without using the mock function', () => {
-        let actual;
+      it('does not resolve without using the mock function', async () => {
+        const callback = jest.fn();
 
-        promise.then((x) => {
-          actual = x;
-        });
+        promise.then(callback);
+        await flushMicroAndMacroTasks();
 
-        expect(actual).toBe(undefined);
+        expect(callback).not.toHaveBeenCalled();
       });
 
       it('resolves multiple levels of chained then-calls containing synchronous functions', async () => {
@@ -116,20 +113,19 @@ const itWorksAsAsyncFn = (asyncFn) => {
       });
 
       it('does not resolve all the way in chained then-calls if a non-resolved native promise is encountered', async () => {
-        let actual;
+        const callbackBeforeNonResolvedPromise = jest.fn();
+        const callbackAfterNonResolvedPromise = jest.fn();
+
         promise
           .then((x) => x)
-          .then((x) => {
-            actual = x;
-          })
-          .then(() => new Promise((x) => {}))
-          .then(() => {
-            actual = 'Unwanted value';
-          });
+          .then(callbackBeforeNonResolvedPromise)
+          .then(() => new Promise(() => {}))
+          .then(callbackAfterNonResolvedPromise);
 
-        await mockFunctionInstance.resolveLastCall('foo');
+        await mockFunctionInstance.resolveLastCall('some-value');
 
-        expect(actual).toBe('foo');
+        expect(callbackBeforeNonResolvedPromise).toHaveBeenCalledWith('some-value');
+        expect(callbackAfterNonResolvedPromise).not.toHaveBeenCalled();
       });
 
       it('resolves so that asynchronous Jest asserts work using returned promise', () => {
@@ -166,59 +162,3 @@ const itWorksAsAsyncFn = (asyncFn) => {
     });
   });
 };
-
-describe('asyncFn with jest mocks', () => {
-  it('returns a Jest mock function', async () => {
-    const mockFunctionInstance = asyncFnForJest();
-
-    expect(jest.isMockFunction(mockFunctionInstance));
-  });
-
-  describe('given "modern" fake timers', () => {
-    beforeEach(() => {
-      jest.useFakeTimers('modern');
-    });
-
-    itWorksAsAsyncFn(asyncFnForJest);
-  });
-
-  describe('given "legacy" fake timers', () => {
-    beforeEach(() => {
-      jest.useFakeTimers('legacy');
-    });
-
-    itWorksAsAsyncFn(asyncFnForJest);
-  });
-
-  describe('given real fake timers', () => {
-    beforeEach(() => {
-      jest.useRealTimers();
-    });
-
-    itWorksAsAsyncFn(asyncFnForJest);
-  });
-
-  describe('given no timers', () => {
-    itWorksAsAsyncFn(asyncFnForJest);
-  });
-});
-
-describe('asyncFn with sinon spies', () => {
-  it('returns a sinon spy function', async () => {
-    const mockFunctionInstance = asyncFnForSinon();
-
-    expect(mockFunctionInstance.constructor).toBe(sinon.spy().constructor);
-  });
-
-  describe('given fake timers', () => {
-    beforeEach(() => {
-      sinon.useFakeTimers();
-    });
-
-    itWorksAsAsyncFn(asyncFnForSinon);
-  });
-
-  describe('given no timers', () => {
-    itWorksAsAsyncFn(asyncFnForSinon);
-  });
-});

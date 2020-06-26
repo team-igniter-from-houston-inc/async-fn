@@ -1,4 +1,4 @@
-import { setImmediate as flushMicroTasks } from 'timers';
+import flushMicroAndMacroTasks from './flushMicroAndMacroTasks';
 
 export default ({ getFn }) => () => {
   const callStack = [];
@@ -64,5 +64,3 @@ export default ({ getFn }) => () => {
 
   return asyncFn;
 };
-
-const flushMicroAndMacroTasks = () => new Promise(flushMicroTasks);
