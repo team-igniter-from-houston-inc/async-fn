@@ -14,12 +14,8 @@
   ],
   "author": "Team Igniter from Houston Inc. Consulting",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/preset-env": "^7.10.3",
-    "timers": "^0.1.1",
-    "jest": "^26.1.0",
-    "sinon": "^9.0.2",
-    "node": "^14.4.0",
-    "prettier": "^2.0.5"
-  }
+  "dependencies": {
+    "timers": "^0.1.1"
+  },
+  "devDependencies": {}
 }
