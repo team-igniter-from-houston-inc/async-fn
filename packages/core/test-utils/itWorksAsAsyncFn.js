@@ -1,4 +1,4 @@
-import flushMicroAndMacroTasks from './flushMicroAndMacroTasks';
+import flushMicroAndMacroTasks from '../src/flushMicroAndMacroTasks';
 
 export default (asyncFn) => {
   it('when a mock function instance is created with arguments, throws', () => {

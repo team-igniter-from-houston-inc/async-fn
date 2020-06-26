@@ -1,5 +1,6 @@
+import itWorksAsAsyncFn from '@async-fn/core/test-utils/itWorksAsAsyncFn';
+
 import asyncFnForJest from './asyncFnForJest';
-import itWorksAsAsyncFn from '@async-fn/core/src/itWorksAsAsyncFn';
 
 describe('asyncFn with jest mocks', () => {
   it('returns a Jest mock function', async () => {
