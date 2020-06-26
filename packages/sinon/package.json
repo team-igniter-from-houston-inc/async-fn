@@ -14,6 +14,9 @@
   "dependencies": {
     "@async-fn/core": "0.0.1"
   },
+  "devDependencies": {
+    "sinon": "^9.0.2"
+  },
   "peerDependencies": {
     "sinon": "^9.0.2"
   }
