@@ -11,11 +11,16 @@
   ],
   "author": "Team Igniter from Houston Inc. Consulting",
   "license": "MIT",
+  "scripts": {
+    "build": "build-async-fn"
+  },
   "dependencies": {
     "@async-fn/core": "0.0.1"
   },
   "devDependencies": {
-    "sinon": "^9.0.2"
+    "sinon": "^9.0.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   },
   "peerDependencies": {
     "sinon": "^9.0.2"
