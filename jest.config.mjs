@@ -1,5 +1,63 @@
-// For a detailed explanation regarding each configuration property, visit:
-// https://jestjs.io/docs/en/configuration.html
+import fs from 'fs';
+import path from 'path';
+import glob from 'glob';
+import getGlobalJestConfig from './getGlobalJestConfig.mjs';
+
+const getObjectFromJsonFile = (filePath) =>
+  fs.existsSync(filePath)
+    ? JSON.parse(
+        fs.readFileSync(filePath, {
+          encoding: 'utf8',
+        }),
+      )
+    : null;
+
+const getProjectColor = (projectNumber) => {
+  const colors = [
+    'red',
+    'green',
+    'yellow',
+    'magenta',
+    'cyan',
+    'white',
+    'redBright',
+    'greenBright',
+    'yellowBright',
+    'blueBright',
+    'magentaBright',
+    'cyanBright',
+    'whiteBright',
+  ];
+
+  return colors[projectNumber % colors.length];
+};
+
+const getProject = (packageJsonPath, projectNumber) => {
+  const rootDir = path.dirname(packageJsonPath);
+  const packageJson = getObjectFromJsonFile(packageJsonPath);
+
+  const localJestConfig = packageJson.jest;
+
+  return {
+    rootDir,
+    displayName: {
+      name: packageJson.name,
+      color: getProjectColor(projectNumber),
+    },
+    ...getGlobalJestConfig({
+      packageRootDir: rootDir,
+    }),
+    ...localJestConfig,
+  };
+};
+
+const getProjectConfigs = () => {
+  const packageJsonPaths = glob.sync('./packages/*/package.json', {
+    ignore: '**/node_modules/**',
+  });
+
+  return packageJsonPaths.map(getProject);
+};
 
 export default {
   // All imported modules in your tests should be mocked automatically
@@ -21,7 +79,7 @@ export default {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -29,7 +87,7 @@ export default {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "babel",
+  coverageProvider: 'babel',
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -122,9 +180,7 @@ export default {
   // rootDir: undefined,
 
   // A list of paths to directories that Jest should use to search for files in
-  // roots: [
-  //   "<rootDir>"
-  // ],
+  // roots: ['<rootDir>'],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
@@ -139,7 +195,7 @@ export default {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: 'node',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -192,4 +248,6 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  projects: getProjectConfigs(),
 };

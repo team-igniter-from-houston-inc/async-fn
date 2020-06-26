@@ -1,5 +1,5 @@
 import asyncFnForJest from './asyncFnForJest';
-import itWorksAsAsyncFn from './itWorksAsAsyncFn';
+import itWorksAsAsyncFn from '@async-fn/core/src/itWorksAsAsyncFn';
 
 describe('asyncFn with jest mocks', () => {
   it('returns a Jest mock function', async () => {
@@ -47,7 +47,9 @@ describe('asyncFn with jest mocks', () => {
 
       // console.log(Object.keys(mockFunctionInstance));
 
-      expect(() => void mockFunctionInstance[restrictedMethodName](() => {})).toThrow(
+      expect(
+        () => void mockFunctionInstance[restrictedMethodName](() => {}),
+      ).toThrow(
         'Using a mock implementation with asyncFn is not supported for making no sense.',
       );
     });

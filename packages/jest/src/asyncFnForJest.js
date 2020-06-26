@@ -1,5 +1,7 @@
-import asyncFnFor from './asyncFnFor';
-import mockImplementationUsageErrorMessage from './mockImplementationUsageErrorMessage';
+import {
+  asyncFnFor,
+  mockImplementationUsageErrorMessage,
+} from '@async-fn/core';
 
 export default (...args) => {
   const mockFunctionInstance = asyncFnFor({

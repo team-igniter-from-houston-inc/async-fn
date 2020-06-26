@@ -1,6 +1,6 @@
 import asyncFnForSinon from './asyncFnForSinon';
 import sinon from 'sinon';
-import itWorksAsAsyncFn from './itWorksAsAsyncFn';
+import itWorksAsAsyncFn from '@async-fn/core/src/itWorksAsAsyncFn';
 
 describe('asyncFn with sinon spies', () => {
   it('returns a sinon spy function', async () => {
