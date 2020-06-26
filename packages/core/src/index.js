@@ -1,2 +1,5 @@
-export asyncFnFor from './asyncFnFor';
-export mockImplementationUsageErrorMessage from './mockImplementationUsageErrorMessage';
+import asyncFnFor from './asyncFnFor';
+import mockImplementationUsageErrorMessage from './mockImplementationUsageErrorMessage';
+
+export { asyncFnFor };
+export { mockImplementationUsageErrorMessage };
