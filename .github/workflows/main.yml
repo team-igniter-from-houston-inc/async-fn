@@ -27,6 +27,11 @@ jobs:
           npm ci
           npm run install-all-packages
       
+      - name: Build
+        run: npm run build-all-packages
+        env:
+          CI: true
+
       - name: Run tests
         run: npm run test
         env:
