@@ -4,6 +4,7 @@ module.exports = {
   entry: './src/index.js',
   target: 'node',
   mode: 'production',
+  externals: ['jest', 'sinon'],
   output: {
     path: path.resolve(process.cwd(), 'build'),
     filename: 'index.js',
