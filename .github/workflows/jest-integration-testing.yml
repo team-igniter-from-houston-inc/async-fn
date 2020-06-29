@@ -1,0 +1,35 @@
+name: Jest integration testing
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x, 14.x]
+        jest-version: [26.x, 25.x, 24.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install packages and jest ${{ matrix.jest-version }}
+        run: |
+          npm ci
+          npm install jest@${{ matrix.jest-version }} --save-dev
+          npm run install-all-packages
+
+      - name: Run tests
+        run: npm run test
+        env:
+          CI: true
