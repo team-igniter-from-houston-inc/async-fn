@@ -6,7 +6,7 @@
     "install-all-packages": "lerna bootstrap",
     "build-all-packages": "lerna run build",
     "test": "jest --coverage --coverageReporters=lcov",
-    "publish": "lerna publish"
+    "publish": "lerna publish prerelease --yes --no-push"
   },
   "keywords": [
     "async-testing",
