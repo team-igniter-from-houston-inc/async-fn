@@ -9,7 +9,7 @@
         "ignored-file",
         "*.md"
       ],
-      "message": "chore(release): publish %s"
+      "message": "Publish %s"
     }
   }
 }
