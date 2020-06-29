@@ -5,7 +5,7 @@
   "scripts": {
     "install-all-packages": "lerna bootstrap",
     "build-all-packages": "lerna run build",
-    "build-and-publish": "npm run build-all-packages && lerna publish prerelease --yes --no-push",
+    "build-and-publish": "npm run build-all-packages && lerna publish prerelease --yes --no-push && git push",
     "test": "jest --coverage --coverageReporters=lcov"
   },
   "keywords": [
