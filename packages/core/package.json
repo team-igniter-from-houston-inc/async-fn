@@ -7,6 +7,9 @@
   "bin": {
     "build-async-fn": "./bin/build-async-fn"
   },
+  "scripts": {
+    "build": "webpack --config=./configs/sharedWebpackConfig.js"
+  },
   "keywords": [
     "async-testing",
     "js",
@@ -17,5 +20,8 @@
   "dependencies": {
     "timers": "^0.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
 }
