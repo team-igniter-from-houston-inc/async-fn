@@ -31,18 +31,6 @@ export default ({ getFn }) => (...args) => {
     return callPromise;
   });
 
-  asyncFn.resolveLastCall = (...rest) => {
-    const lastCall = callStack.pop();
-
-    if (!lastCall) {
-      throw new Error(
-        'Tried to resolve an asyncFn call that has not been made yet.',
-      );
-    }
-
-    return lastCall.resolve(...rest);
-  };
-
   asyncFn.rejectLastCall = (...rest) => {
     const lastCall = callStack.pop();
 

@@ -24,14 +24,6 @@ export default (asyncFn) => {
       }).toThrow('Tried to reject an asyncFn call that has not been made yet.');
     });
 
-    it('given not called, when still tried to resolve last call, throws', () => {
-      expect(() => {
-        mockFunctionInstance.resolveLastCall();
-      }).toThrow(
-        'Tried to resolve an asyncFn call that has not been made yet.',
-      );
-    });
-
     it('given not called, when still tried to resolve first call, throws', () => {
       expect(() => {
         mockFunctionInstance.resolveFirstUnresolvedCall();
@@ -75,7 +67,7 @@ export default (asyncFn) => {
           actual = x;
         });
 
-        await mockFunctionInstance.resolveLastCall('foo');
+        await mockFunctionInstance.resolveFirstUnresolvedCall('foo');
 
         expect(actual).toBe('foo');
       });
@@ -99,7 +91,7 @@ export default (asyncFn) => {
             actual = x;
           });
 
-        await mockFunctionInstance.resolveLastCall('foo');
+        await mockFunctionInstance.resolveFirstUnresolvedCall('foo');
 
         expect(actual).toBe('foo');
       });
@@ -113,7 +105,7 @@ export default (asyncFn) => {
             actual = x;
           });
 
-        await mockFunctionInstance.resolveLastCall('foo');
+        await mockFunctionInstance.resolveFirstUnresolvedCall('foo');
 
         expect(actual).toBe('foo');
       });
@@ -128,7 +120,7 @@ export default (asyncFn) => {
           .then(() => new Promise(() => {}))
           .then(callbackAfterNonResolvedPromise);
 
-        await mockFunctionInstance.resolveLastCall('some-value');
+        await mockFunctionInstance.resolveFirstUnresolvedCall('some-value');
 
         expect(callbackBeforeNonResolvedPromise).toHaveBeenCalledWith(
           'some-value',
@@ -137,13 +129,13 @@ export default (asyncFn) => {
       });
 
       it('resolves so that asynchronous Jest asserts work using returned promise', () => {
-        mockFunctionInstance.resolveLastCall('foo');
+        mockFunctionInstance.resolveFirstUnresolvedCall('foo');
 
         return expect(promise).resolves.toBe('foo');
       });
 
       it('resolves so that asynchronous Jest asserts work using the done-function', (done) => {
-        mockFunctionInstance.resolveLastCall('foo');
+        mockFunctionInstance.resolveFirstUnresolvedCall('foo');
 
         promise
           .then((value) => {
@@ -153,7 +145,7 @@ export default (asyncFn) => {
       });
 
       it('resolves so that async/await works', async () => {
-        mockFunctionInstance.resolveLastCall('foo');
+        mockFunctionInstance.resolveFirstUnresolvedCall('foo');
 
         const actual = await promise;
         expect(actual).toBe('foo');
