@@ -1,6 +1,6 @@
 {
   "name": "@async-fn/sinon",
-  "version": "0.0.2-alpha.4",
+  "version": "0.0.2-alpha.5",
   "description": "A helper for unit testing to create mocks/spies that can additionally asynchronously resolve and reject while retaining simplicity.",
   "main": "build/index.js",
   "keywords": [
@@ -14,7 +14,7 @@
     "build": "build-async-fn"
   },
   "devDependencies": {
-    "@async-fn/core": "^0.0.2-alpha.4",
+    "@async-fn/core": "^0.0.2-alpha.5",
     "sinon": "^9.0.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
