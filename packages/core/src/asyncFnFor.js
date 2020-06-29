@@ -31,28 +31,28 @@ export default ({ getFn }) => (...args) => {
     return callPromise;
   });
 
-  asyncFn.rejectLastCall = (...rest) => {
-    const lastCall = callStack.pop();
+  asyncFn.reject = (...rest) => {
+    const oldestUnresolvedCall = callStack.shift();
 
-    if (!lastCall) {
+    if (!oldestUnresolvedCall) {
       throw new Error(
         'Tried to reject an asyncFn call that has not been made yet.',
       );
     }
 
-    return lastCall.reject(...rest);
+    return oldestUnresolvedCall.reject(...rest);
   };
 
-  asyncFn.resolveFirstUnresolvedCall = (...rest) => {
-    const firstCall = callStack.shift();
+  asyncFn.resolve = (...rest) => {
+    const oldestUnresolvedCall = callStack.shift();
 
-    if (!firstCall) {
+    if (!oldestUnresolvedCall) {
       throw new Error(
         'Tried to resolve an asyncFn call that has not been made yet.',
       );
     }
 
-    return firstCall.resolve(...rest);
+    return oldestUnresolvedCall.resolve(...rest);
   };
 
   return asyncFn;

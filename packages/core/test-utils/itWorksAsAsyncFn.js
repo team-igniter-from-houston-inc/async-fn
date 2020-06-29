@@ -18,28 +18,28 @@ export default (asyncFn) => {
       expect(mockFunctionInstance().then).toEqual(expect.any(Function));
     });
 
-    it('given not called, when still tried to reject last call, throws', () => {
+    it('given not called, but still tried to reject, throws', () => {
       expect(() => {
-        mockFunctionInstance.rejectLastCall();
+        mockFunctionInstance.reject();
       }).toThrow('Tried to reject an asyncFn call that has not been made yet.');
     });
 
-    it('given not called, when still tried to resolve first call, throws', () => {
+    it('given not called, but still tried to resolve, throws', () => {
       expect(() => {
-        mockFunctionInstance.resolveFirstUnresolvedCall();
+        mockFunctionInstance.resolve();
       }).toThrow(
         'Tried to resolve an asyncFn call that has not been made yet.',
       );
     });
 
-    it('given called multiple times, when resolved multiple times, all returned promises resolve with resolution specific values', async () => {
+    it('given called multiple times, when resolved multiple times with values, all returned promises resolve with the specified values', async () => {
       const firstPromise = mockFunctionInstance();
       const secondPromise = mockFunctionInstance();
       const thirdPromise = mockFunctionInstance();
 
-      mockFunctionInstance.resolveFirstUnresolvedCall('some-first-value');
-      mockFunctionInstance.resolveFirstUnresolvedCall('some-second-value');
-      mockFunctionInstance.resolveFirstUnresolvedCall('some-third-value');
+      mockFunctionInstance.resolve('some-first-value');
+      mockFunctionInstance.resolve('some-second-value');
+      mockFunctionInstance.resolve('some-third-value');
 
       const results = await Promise.all([
         firstPromise,
@@ -67,7 +67,7 @@ export default (asyncFn) => {
           actual = x;
         });
 
-        await mockFunctionInstance.resolveFirstUnresolvedCall('foo');
+        await mockFunctionInstance.resolve('foo');
 
         expect(actual).toBe('foo');
       });
@@ -91,7 +91,7 @@ export default (asyncFn) => {
             actual = x;
           });
 
-        await mockFunctionInstance.resolveFirstUnresolvedCall('foo');
+        await mockFunctionInstance.resolve('foo');
 
         expect(actual).toBe('foo');
       });
@@ -105,12 +105,12 @@ export default (asyncFn) => {
             actual = x;
           });
 
-        await mockFunctionInstance.resolveFirstUnresolvedCall('foo');
+        await mockFunctionInstance.resolve('foo');
 
         expect(actual).toBe('foo');
       });
 
-      it('does not resolve all the way in chained then-calls if a non-resolved native promise is encountered', async () => {
+      it('given a non-resolved promise, does not resolve beyond the unresolved promise in a chain of then-calls', async () => {
         const callbackBeforeNonResolvedPromise = jest.fn();
         const callbackAfterNonResolvedPromise = jest.fn();
 
@@ -120,22 +120,23 @@ export default (asyncFn) => {
           .then(() => new Promise(() => {}))
           .then(callbackAfterNonResolvedPromise);
 
-        await mockFunctionInstance.resolveFirstUnresolvedCall('some-value');
+        await mockFunctionInstance.resolve('some-value');
 
         expect(callbackBeforeNonResolvedPromise).toHaveBeenCalledWith(
           'some-value',
         );
+
         expect(callbackAfterNonResolvedPromise).not.toHaveBeenCalled();
       });
 
       it('resolves so that asynchronous Jest asserts work using returned promise', () => {
-        mockFunctionInstance.resolveFirstUnresolvedCall('foo');
+        mockFunctionInstance.resolve('foo');
 
         return expect(promise).resolves.toBe('foo');
       });
 
       it('resolves so that asynchronous Jest asserts work using the done-function', (done) => {
-        mockFunctionInstance.resolveFirstUnresolvedCall('foo');
+        mockFunctionInstance.resolve('foo');
 
         promise
           .then((value) => {
@@ -145,19 +146,16 @@ export default (asyncFn) => {
       });
 
       it('resolves so that async/await works', async () => {
-        mockFunctionInstance.resolveFirstUnresolvedCall('foo');
+        mockFunctionInstance.resolve('foo');
 
         const actual = await promise;
         expect(actual).toBe('foo');
       });
 
-      it('rejects with error', (done) => {
-        promise.catch((e) => {
-          expect(e).toBe('some rejection');
-          done();
-        });
+      it('when rejected with error, rejects with the error', () => {
+        mockFunctionInstance.reject('some rejection');
 
-        mockFunctionInstance.rejectLastCall('some rejection');
+        return expect(promise).rejects.toBe('some rejection');
       });
     });
   });
