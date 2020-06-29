@@ -13,10 +13,9 @@
   "scripts": {
     "build": "build-async-fn"
   },
-  "dependencies": {
-    "@async-fn/core": "^0.0.2-alpha.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@async-fn/core": "^0.0.2-alpha.0",
     "jest": "^26.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
