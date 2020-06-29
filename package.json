@@ -5,7 +5,8 @@
   "scripts": {
     "install-all-packages": "lerna bootstrap",
     "build-all-packages": "lerna run build",
-    "test": "jest --coverage --coverageReporters=lcov"
+    "test": "jest --coverage --coverageReporters=lcov",
+    "publish": "lerna publish"
   },
   "keywords": [
     "async-testing",
