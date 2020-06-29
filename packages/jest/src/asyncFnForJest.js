@@ -10,6 +10,8 @@ export default (...args) => {
 
   mockFunctionInstance.mockImplementation = throwMockImplementationUsageError;
   mockFunctionInstance.mockImplementationOnce = throwMockImplementationUsageError;
+  mockFunctionInstance.mockReturnValue = throwMockImplementationUsageError;
+  mockFunctionInstance.mockReturnValueOnce = throwMockImplementationUsageError;
 
   return mockFunctionInstance;
 };

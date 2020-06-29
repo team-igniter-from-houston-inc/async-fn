@@ -20,7 +20,7 @@
     "webpack-cli": "^3.3.12"
   },
   "peerDependencies": {
-    "jest": "^26.1.0"
+    "jest": ">= 24.9.0"
   },
   "publishConfig": {
     "access": "public"
