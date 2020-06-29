@@ -5,7 +5,7 @@ import {
 
 export default (...args) => {
   const mockFunctionInstance = asyncFnFor({
-    getFn: jest.fn,
+    mockFunctionFactory: jest.fn,
   })(...args);
 
   mockFunctionInstance.mockImplementation = throwMockImplementationUsageError;
