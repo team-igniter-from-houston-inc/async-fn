@@ -1,6 +1,5 @@
 {
   "name": "@async-fn/sinon",
-  "private": true,
   "version": "0.0.2-alpha.0",
   "description": "A helper for unit testing to create mocks/spies that can additionally asynchronously resolve and reject while retaining simplicity.",
   "main": "build/index.js",
