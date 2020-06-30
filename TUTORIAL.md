@@ -1,6 +1,10 @@
 # How asyncFn saves lives when unit-testing async code
 
-This is an imaginary dialog between two programmers on their way to discover the orgasmic joys of asyncFn. It is written as incremental set of iterations, forming a chain of thought, complete with pauses between for retrospection.
+![asyncFn](https://raw.githubusercontent.com/team-igniter-from-houston-inc/async-fn/master/logo.png)
+
+This is an imaginary dialog between two programmers on their way to discover the orgasmic joys of **asyncFn**. It is written as incremental set of iterations, forming a chain of thought, complete with pauses between for retrospection.
+
+For the purposes of this tutorial, test code is more relevant. However, an example of the final production code has been provided at the end of the writing.
 
 > **Fry**: My name is Fry, and I find it difficult to unit test async-stuff in javascript.
 
@@ -32,8 +36,6 @@ Feature: As a player, I can play a game called Monster Beatdown
 > **Fry**: The kicker here is that in this game, prompting the player for action is asynchronous.
 
 > **Leela**: Mm-hmm, I think I get it. Let's get our hands dirty and see where it lands us.
-
-> ...
 
 > **Fry**: Here's an initial test for good measure:
 
@@ -432,3 +434,10 @@ export default ({ askPlayerToHit = () => {}, messagePlayer = () => {} }) => ({
   },
 });
 ```
+## Who made this?
+
+asyncFn is lovingly crafted by Your pals from **Team: Igniter from [Houston Inc. Consulting](https://houston-inc.com)**.
+
+We are a software development team of **friends**, with proven tradition in professional excellence. We specialize in holistic rapid deployments without sacrificing quality.
+
+Like what you see? Come say hi at [Gitter](https://gitter.im/async-fn/community).
