@@ -4,9 +4,11 @@
 
 This is an imaginary dialog between two programmers on their way to discover the orgasmic joys of **asyncFn**. It is written as incremental set of iterations, forming a chain of thought, complete with pauses between for retrospection.
 
-For the purposes of this tutorial, test code is more relevant than production code. An example of the production code for the game has been provided as an appendix at the end of the writing.
+Be warned that we'll also cover topics such as TDD, evil pairing, and "negation testing".
 
-> **Fry**: My name is Fry, and I find it difficult to unit test async-stuff in javascript.
+## The Dialog
+
+> **Fry**: My name is Fry, and I find it difficult to **unit test** async-stuff in javascript.
 
 > **Leela**: Tell me more.
 
@@ -56,7 +58,17 @@ it('when a monster is encountered, informs the player of this', () => {
 });
 ```
 
-> **Leela**: Ok, so far so good. I see you chose to inject the mock-function for messaging the player as an argument for the function we are testing. Crystal. Full steam ahead.
+Contents of `./monsterBeatdown.js` so far:
+
+```javascript
+export default ({ messagePlayer }) => ({
+  encounterMonster: () => {
+    messagePlayer(`You encounter a monster with 5 hit-points.`);
+  },
+});
+```
+
+> **Leela**: Ok, so far so good. I see you chose to **inject** the mock-function for messaging the player as an argument for the function we are testing. Crystal. Full steam ahead.
 
 > **Fry**: Right on. Here's my vision for asking the player if she wants to attack, and if not, she loses.
 
@@ -106,7 +118,13 @@ it('given a monster is encountered, when player chooses to flee, the monster eat
 });
 ```
 
-> **Leela**: Hold the phone. I see two problems here. One is the duplication, and the other one is about the test describing occurrences in non-chronological order, making the test harder to read. Let's start by fixing the first problem.
+Contents of `./monsterBeatdown.js` so far:
+
+```javascript
+// no changes, as only tests were refactored.
+```
+
+> **Leela**: Hold the phone. I see two problems here. One is the **duplication**, and the other one is about the test describing occurrences in **non-chronological** order, making the test harder to read. Let's start by fixing the first problem.
 
 > **Fry**: Uh, I was just about to remove the duplication anyway. Red-green-refactor, right?
 
@@ -159,13 +177,33 @@ describe('given a monster is encountered', () => {
 });
 ```
 
-> **Fry**: There. Now the duplication for the test setup has been removed to a degree. However, the problem of setup not being in chronological order prevents us from removing all of the duplication. See how we are forced to repeat game.encounterMonster(), because askPlayerToHitMock needs to know how to behave before it is called.
+Contents of `./monsterBeatdown.js` so far:
+
+```javascript
+export default ({ messagePlayer, askPlayerToHit }) => ({
+  encounterMonster: () => {
+    // For real life, the implementation below makes little sense.
+    // This is intentional, and is so to prove a point later.
+    messagePlayer('Game over.');
+
+    messagePlayer('You encounter a monster with 5 hit-points.');
+
+    messagePlayer(
+      'You chose to flee the monster, but the monster eats you in disappointment.',
+    );
+
+    askPlayerToHit('Do you want to attack it?');
+  },
+});
+```
+
+> **Fry**: There. Now the duplication for the test setup has been removed, but only to a degree. However, the problem of test not being written in chronological order prevents us from removing all the duplication. See how we are forced to repeat game.encounterMonster(), because askPlayerToHitMock needs to know how to behave **before** it is called.
 >
-> Worse yet, this makes the describe dishonest, as it claims to display how "given a monster is encountered", but in reality this is something that happens only later in test setup.
+> Worse yet, this makes the "describe" **dishonest**, as it claims to display how "given a monster is encountered", but in reality this is something that happens only later in test setup.
 >
 > All this kind of bums me out, and I've felt the pain of this getting out of hand as in real life requirements and features start to pile up.
 
-> **Leela**: I see. Let's now introduce asyncFn as an expansion to normal jest.fn.
+> **Leela**: I see. Let's now introduce **asyncFn** as an expansion to the normal jest.fn.
 >
 > Behold.
 
@@ -217,7 +255,13 @@ describe('given a monster is encountered', () => {
 });
 ```
 
-> **Leela**: Now the duplication is gone, and everything happens in clean, chronological order. It kind of reads like a story, don't you think?
+Contents of `./monsterBeatdown.js` so far:
+
+```javascript
+// no changes, as only tests were refactored.
+```
+
+> **Leela**: Now the duplication is gone, and everything takes place in a clean, chronological order. It kind of reads like a story, don't you think?
 
 > **Fry**: Mm-hmm. I see it. I have a good feeling about it. But there's something bothering me with the production code. I see that the tests are all green, but clearly the code does not do anything sensical. It just blows through, merely satisfying the tests.
 
@@ -251,7 +295,14 @@ describe('given a monster is encountered', () => {
   });
 
   // This is the "negation test" referred later in narrative.
-  it('when player has not chosen anything yet, the game is not lost', () => {
+  it('when player has not chosen anything yet, the is not eaten', () => {
+    expect(messagePlayerMock).not.toHaveBeenCalledWith(
+      'You chose to flee the monster, but the monster eats you in disappointment.',
+    );
+  });
+
+  // This is another negation test.
+  it('when player has not chosen anything yet, the game is not over', () => {
     expect(messagePlayerMock).not.toHaveBeenCalledWith('Game over.');
   });
 
@@ -270,10 +321,49 @@ describe('given a monster is encountered', () => {
       expect(messagePlayerMock).toHaveBeenCalledWith('Game over.');
     });
   });
+
+  describe('when player chooses to attack', () => {
+    beforeEach(async () => {
+      await askPlayerToHitMock.resolve(true);
+    });
+
+    // Another negation test
+    it('player does not lose', () => {
+      expect(messagePlayerMock).not.toHaveBeenCalledWith(
+        'You chose to flee the monster, but the monster eats you in disappointment.',
+      );
+    });
+
+    it('the game is over', () => {
+      expect(messagePlayerMock).toHaveBeenCalledWith('Game over.');
+    });
+  });
 });
 ```
 
-> **Leela**: There. By adding something we call a "negation test", here "when player has not chosen anything yet, the game is not lost", we forced the production code to make more sense by writing a test. As a practice, this "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
+Contents of `./monsterBeatdown.js` so far:
+
+```javascript
+export default ({ messagePlayer, askPlayerToHit }) => ({
+  encounterMonster: async () => {
+    messagePlayer('You encounter a monster with 5 hit-points.');
+
+    const playerChoseToAttack = await askPlayerToHit(
+      'Do you want to attack it?',
+    );
+
+    if (!playerChoseToAttack) {
+      messagePlayer(
+        'You chose to flee the monster, but the monster eats you in disappointment.',
+      );
+    }
+    
+    messagePlayer('Game over.');
+  },
+});
+```
+
+> **Leela**: There. By adding something we call a "negation test", we forced the production code to make little bit more sense by writing a test. As a practice, this "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
 >
 > But however important this may be, it is slightly off-course. What is relevant is that asyncFn supports evil pairing as line of thinking. Motor on?
 
@@ -392,17 +482,7 @@ describe('given a monster is encountered', () => {
 });
 ```
 
-> **Leela**: There. Now the monster gets hit multiple times, all while things still happen in clear order.
->
-> Side note: Did you notice how now there's more negation tests? As a byproduct of implementing the game using TDD and evil pairing, the negation tests make it even harder to break the code when eg. adding new features and doing refactoring.
-
-> **Fry**: Color me enlightened. This has changed my view of the world as a programmer and a human being. I shall make sacrifices in your honor.
-
----
-
-## Appendix: One implementation for Monster Beatdown
-
-Contents of `./monsterBeatdown.js`:
+Contents of final `./monsterBeatdown.js`:
 
 ```javascript
 export default ({ askPlayerToHit = () => {}, messagePlayer = () => {} }) => ({
@@ -437,6 +517,12 @@ export default ({ askPlayerToHit = () => {}, messagePlayer = () => {} }) => ({
   },
 });
 ```
+
+> **Leela**: There. Now the monster gets hit multiple times, all while things still happen in clear order.
+>
+> Side note: Did you notice how now there's more negation tests? As a byproduct of implementing the game using TDD and evil pairing, the negation tests make it even harder to break the code when eg. adding new features and doing refactoring.
+
+> **Fry**: Color me enlightened. This has changed my view of the world as a programmer and a human being. I shall make sacrifices in your honor.
 
 ## Who made this?
 
