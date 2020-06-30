@@ -119,7 +119,7 @@ Currently asyncFn is also available for [sinon](https://www.npmjs.com/package/@a
 
 ## Who are we?
 
-asyncFn is lovingly crafted by Your pals **Team: Igniter from Houston Inc. Consulting**.
+asyncFn is lovingly crafted by Your pals from **Team: Igniter from [Houston Inc. Consulting](https://houston-inc.com)**.
 
 We are a software development team of **friends**, with proven tradition in professional excellence. We specialize in holistic rapid deployments without sacrificing quality.
 
