@@ -4,7 +4,7 @@
 
 This is an imaginary dialog between two programmers on their way to discover the orgasmic joys of **asyncFn**. It is written as incremental set of iterations, forming a chain of thought, complete with pauses between for retrospection.
 
-For the purposes of this tutorial, test code is more relevant. However, an example of the final production code has been provided at the end of the writing.
+For the purposes of this tutorial, test code is more relevant than production code. An example of the production code for the game has been provided as an appendix at the end of the writing.
 
 > **Fry**: My name is Fry, and I find it difficult to unit test async-stuff in javascript.
 
@@ -171,6 +171,7 @@ describe('given a monster is encountered', () => {
 
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
+import asyncFn from '@asyncFn/jest';
 
 describe('given a monster is encountered', () => {
   let askPlayerToHitMock;
@@ -224,6 +225,7 @@ describe('given a monster is encountered', () => {
 
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
+import asyncFn from '@asyncFn/jest';
 
 describe('given a monster is encountered', () => {
   let askPlayerToHitMock;
@@ -281,6 +283,7 @@ describe('given a monster is encountered', () => {
 
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
+import asyncFn from '@asyncFn/jest';
 
 describe('given a monster is encountered', () => {
   let askPlayerToHitMock;
@@ -397,7 +400,7 @@ describe('given a monster is encountered', () => {
 
 ---
 
-## One implementation for Monster Beatdown
+## Appendix: One implementation for Monster Beatdown
 
 Contents of `./monsterBeatdown.js`:
 
@@ -434,10 +437,11 @@ export default ({ askPlayerToHit = () => {}, messagePlayer = () => {} }) => ({
   },
 });
 ```
+
 ## Who made this?
 
-asyncFn is lovingly crafted by Your pals from **Team: Igniter from [Houston Inc. Consulting](https://houston-inc.com)**.
+asyncFn is lovingly crafted by Your pals at **Team: Igniter from [Houston Inc. Consulting](https://houston-inc.com)**.
 
 We are a software development team of **friends**, with proven tradition in professional excellence. We specialize in holistic rapid deployments without sacrificing quality.
 
-Like what you see? Come say hi at [Gitter](https://gitter.im/async-fn/community).
+Come say hi at [Gitter](https://gitter.im/async-fn/community).
