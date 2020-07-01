@@ -2,7 +2,7 @@
 
 ![asyncFn](https://raw.githubusercontent.com/team-igniter-from-houston-inc/async-fn/master/logo.png)
 
-**asyncFn** provides additional methods to eg. [jest.fn](https://www.npmjs.com/package/@async-fn/jest) or [sinon.spy](https://www.npmjs.com/package/@async-fn/sinon) to introduce "**late resolve**" for the promises returned.
+**[asyncFn](https://github.com/team-igniter-from-houston-inc/async-fn)** is a library that provides additional methods to eg. [jest.fn](https://www.npmjs.com/package/@async-fn/jest) or [sinon.spy](https://www.npmjs.com/package/@async-fn/sinon) to introduce "**late resolve**" for the promises returned.
 
 This simplifies async unit testing by allowing tests that read chronologically, **like a story**.
 
@@ -588,7 +588,13 @@ export default ({ askPlayerToHit, messagePlayer }) => ({
 >
 > **Fry**: Color me enlightened. This has changed my view of the world as a programmer and a human being. I shall make sacrifices in your honor and get an asyncFn-tattoo.
 
-## Who made this?
+### Summary
+
+Having witnessed the adventure, we've now seen how the **late resolving** of **asyncFn** permitted troublesome tests, with awkward readability, to be refactored orderly as a story, with significantly better readability.
+
+asyncFn, and its many iterations, are something that we, as a team, have used for multiple years now. It has categorically changed the way we approach unit testing of asynchronous code in javascript. Which we so love.
+
+## Who are we?
 
 asyncFn is lovingly crafted by Your pals at **Team: Igniter from [Houston Inc. Consulting](https://houston-inc.com)**.
 
