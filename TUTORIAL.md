@@ -4,15 +4,17 @@
 
 **asyncFn** provides additional methods to eg. [jest.fn](https://www.npmjs.com/package/@async-fn/jest) or [sinon.spy](https://www.npmjs.com/package/@async-fn/sinon) to introduce "**late resolve**" for the promises returned.
 
-This simplifies async unit testing by allowing tests that read chronologically, **like a story**, and do not require excessive test setup to know beforehand how async mocks are supposed to behave in each scenario.
+This simplifies async unit testing by allowing tests that read chronologically, **like a story**.
 
-This is an imaginary dialog between two programmers on their way to discover the orgasmic joys of **asyncFn**. It is written as incremental set of iterations, forming a chain of thought, complete with pauses between for retrospection.
+## The story begins
 
-Be warned that we'll also cover topics such as TDD, evil pairing, and "negation testing".
+The text you are about to consume describes an imaginary dialog between two programmers on their way to discover the _orgastic pleasures_ of **asyncFn**.
 
-Here
+Be warned that we'll also cover topics such as TDD, evil pairing, and "negation testing". They are not the main topic here, but some words are spared for them nonetheless to justify way of thinking.
 
-## The Dialog
+Best of luck, _Dear Reader_.
+
+### Chapter 1: The premise and the foundation
 
 > **Fry**: My name is Fry, and I find it difficult to **unit test** async-stuff in javascript.
 
@@ -76,7 +78,9 @@ export default ({ messagePlayer }) => ({
 
 > **Leela**: Ok, so far so good. I see you chose to **inject** the mock-function for messaging the player as an argument for the function we are testing. Crystal. Full steam ahead.
 
-> **Fry**: Right on. Here's my vision for asking the player if she wants to attack, and if not, she loses.
+> **Fry**: Right on. Next up will be my vision for asking the player if she wants to attack, and if not, she loses.
+
+### Chapter 2: The problems emerge
 
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
@@ -162,6 +166,8 @@ export default ({ messagePlayer = () => {}, askPlayerToHit = () => {} }) => ({
 
 > **Leela**: Hold the phone. I see two problems here. One is the **duplication**, and the other one is about the test describing occurrences in **non-chronological** order, making the test harder to read. Let's start by fixing the first problem.
 
+### Chapter 3: The clumsy fix
+
 > **Fry**: Uh, I was just about to remove the duplication anyway. Red-green-refactor, right?
 
 > **Leela**: Right.
@@ -237,6 +243,8 @@ Contents of `./monsterBeatdown.js` so far:
 >
 > Behold.
 
+### Chapter 4: The asyncFn is beheld
+
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
 import asyncFn from '@asyncFn/jest';
@@ -302,6 +310,8 @@ Contents of `./monsterBeatdown.js` so far:
 > **Fry**: Mm-hmm. I see it. I have a good feeling about it. But there's something bothering me with the production code. I see that the tests are all green, but clearly the code does not do anything sensical. It just blows through, merely satisfying the tests.
 
 > **Leela**: You got me there. It's something called evil pairing. If you want to mold the production code your way, you need to order it from the universe by writing a test. Let me show you how.
+
+### Chapter 5: The evil is good and negation is positive
 
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
@@ -410,6 +420,8 @@ export default ({ messagePlayer, askPlayerToHit }) => ({
 > Additionally, as a practice, the "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
 >
 > But however important this may be, it is slightly off-course. What is relevant is that asyncFn supports evil pairing as line of thinking. Motor on?
+
+### Chapter 6: The multiplicity challenge and the enlightenment
 
 > **Fry**: For sure. Can we see how the game develops some steps further? Particularly, I've been suffering with testing functions that are called multiple times, but still return promises.
 
