@@ -2,9 +2,15 @@
 
 ![asyncFn](https://raw.githubusercontent.com/team-igniter-from-houston-inc/async-fn/master/logo.png)
 
+**asyncFn** provides additional methods to eg. [jest.fn](https://www.npmjs.com/package/@async-fn/jest) or [sinon.spy](https://www.npmjs.com/package/@async-fn/sinon) to introduce "**late resolve**" for the promises returned.
+
+This simplifies async unit testing by allowing tests that read chronologically, **like a story**, and do not require excessive test setup to know beforehand how async mocks are supposed to behave in each scenario.
+
 This is an imaginary dialog between two programmers on their way to discover the orgasmic joys of **asyncFn**. It is written as incremental set of iterations, forming a chain of thought, complete with pauses between for retrospection.
 
 Be warned that we'll also cover topics such as TDD, evil pairing, and "negation testing".
+
+Here
 
 ## The Dialog
 
@@ -399,7 +405,7 @@ export default ({ messagePlayer, askPlayerToHit }) => ({
 });
 ```
 
-> **Leela**: There. By adding something we call a "negation test", we forced the production code to make little bit more sense by writing these tests that describe what is not supposed to happen. This is a larger topic, but perhaps we'll cover it somewhere else more in detail. 
+> **Leela**: There. By adding something we call a "negation test", we forced the production code to make little bit more sense by writing these tests that describe what is not supposed to happen. This is a larger topic, but perhaps we'll cover it somewhere else more in detail.
 >
 > Additionally, as a practice, the "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
 >
@@ -574,4 +580,4 @@ asyncFn is lovingly crafted by Your pals at **Team: Igniter from [Houston Inc. C
 
 We are a software development team of **friends**, with proven tradition in professional excellence. We specialize in holistic rapid deployments without sacrificing quality.
 
-Come say hi at [Gitter](https://gitter.im/async-fn/community).
+Come say hi at [Gitter](https://gitter.im/async-fn/community), [email](mailto:igniter@houston-inc.com) us, or check out the [team's website](https://team.igniter.houston.io). We just might be open for hire ;)
