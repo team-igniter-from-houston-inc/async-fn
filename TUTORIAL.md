@@ -235,7 +235,7 @@ Contents of `./monsterBeatdown.js` so far:
 
 > **Fry**: There. Now the duplication for the test setup has been removed, but only to a degree. However, the problem of test not being written in chronological order prevents us from removing all the duplication. See how we are forced to repeat `game.encounterMonster()`, because `askPlayerToHitMock` needs to know how to behave **before** it is called.
 >
-> Worse yet, this makes the "describe" **dishonest**, as it claims to display how `"given a monster is encountered"`, but in reality this is something that happens only later in test setup.
+> Worse yet, this makes the "describe" **dishonest**, as it claims to display how `"given a monster is encountered"`, but in reality, this is something that happens only later in the test setup.
 >
 > All this kind of bums me out, and I've felt **the pain** of this getting out of hand as in real life requirements and features start to pile up.
 
@@ -305,9 +305,9 @@ Contents of `./monsterBeatdown.js` so far:
 // no changes, as only tests were refactored.
 ```
 
-> **Leela**: Now the duplication is gone, and everything takes place in a clean, chronological order. It kind of reads like a story, don't you think?
+> **Leela**: Now the duplication is gone, and everything takes place in clean, chronological order. It kind of reads like a story, don't you think?
 
-> **Fry**: Mm-hmm. I see it. I have a good feeling about it. But there's something bothering me with the production code. I see that the tests are all green, but clearly the code does not do anything sensical. It just blows through, merely satisfying the tests.
+> **Fry**: Mm-hmm. I see it. I have a good feeling about it. But there's something bothering me with the production code. I see that the tests are all green, but clearly, the code does not do anything sensical. It just blows through, merely satisfying the tests.
 
 > **Leela**: You got me there. It's something called "evil pairing". If you want to mold the production code your way, you need to order it from the universe by writing a test. Let me show you how.
 
@@ -417,17 +417,17 @@ export default ({ messagePlayer, askPlayerToHit }) => ({
 
 > **Leela**: There. I've reduced the "evilness" of the code by adding something we call a "negation tests". By writing tests that describe what is not supposed to happen we forced the production code to make a little bit more sense.
 >
-> And if you are wondering where the name "evil pairing" comes from, it comes from playing **unit-testing ping-pong** in such a way that the production code is always written in the most evil way possible, ie. the code is non-sensical for real-life, yet it still satisfies the tests. The only way out of this is to force sense in production through unit tests. 
+> And if you are wondering where the name "evil pairing" comes from, it comes from playing **unit-testing ping-pong** in such a way that the production code is always written in the most evil way possible, ie. the code is non-sensical for real-life, yet it still satisfies the tests. The only way out of this is to force sense in production through unit tests.
 >
 > You can tell coders are evil pairing from the evil laughter.
 >
 > As a practice, this "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit more.
 >
-> But I digress. However important this may be, it is slightly off-course. What is relevant is that asyncFn supports evil pairing as line of thinking. Motor on?
+> But I digress. However important this may be, it is slightly off-course. What is relevant is that asyncFn supports evil pairing as a line of thinking. Motor on?
 
 ### Chapter 6: The multiplicity challenge and the enlightenment
 
-> **Fry**: For sure. Can we see how the game develops some steps further? Particularly, I've been suffering with testing functions that are called multiple times, but still return promises.
+> **Fry**: For sure. Can we see how the game develops some steps further? Particularly, I've been suffering from testing of functions that are called multiple times, but still, return promises.
 
 > **Leela**: I feel you. My guess is an asyncFn-mock will get called multiple times soon enough, when we start choosing to attack the monster multiple times. Let's see how that pans out.
 
@@ -584,9 +584,9 @@ export default ({ askPlayerToHit, messagePlayer }) => ({
 });
 ```
 
-> **Leela**: There. Now the monster gets hit multiple times, all while things still happen in clear order.
+> **Leela**: There. Now the monster gets hit multiple times, all while things still happen in a clear order.
 >
-> **Fry**: Color me enlightened. This has changed my view of the world as a programmer and a human being. I shall make sacrifices in your honor.
+> **Fry**: Color me enlightened. This has changed my view of the world as a programmer and a human being. I shall make sacrifices in your honor and get an asyncFn-tattoo.
 
 ## Who made this?
 
@@ -594,4 +594,4 @@ asyncFn is lovingly crafted by Your pals at **Team: Igniter from [Houston Inc. C
 
 We are a software development team of **friends**, with proven tradition in professional excellence. We specialize in holistic rapid deployments without sacrificing quality.
 
-Come say hi at [Gitter](https://gitter.im/async-fn/community), [email](mailto:igniter@houston-inc.com) us, or check out the [team's website](https://team.igniter.houston.io). We just might be open for hire ;)
+Come say hi at [Gitter](https://gitter.im/async-fn/community), [email](mailto:igniter@houston-inc.com) us, or check out the [team's website](https://team.igniter.houston.io). We just might be open to hiring ;)
