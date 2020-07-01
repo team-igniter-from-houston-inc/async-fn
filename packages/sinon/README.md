@@ -1,6 +1,6 @@
 # @asyncFn/sinon
 
-![Test status](https://github.com/team-igniter-from-houston-inc/async-fn/workflows/Sinon%20integration%20testing/badge.svg) [![npm version](https://badge.fury.io/js/%40async-fn%2Fsinon.svg)](https://badge.fury.io/js/%40async-fn%2Fsinon) [![Gitter](https://badges.gitter.im/async-fn/community.svg)](https://gitter.im/async-fn/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+![Test status](https://github.com/team-igniter-from-houston-inc/async-fn/workflows/Sinon/badge.svg) [![npm version](https://badge.fury.io/js/%40async-fn%2Fsinon.svg)](https://badge.fury.io/js/%40async-fn%2Fsinon) [![Gitter](https://badges.gitter.im/async-fn/community.svg)](https://gitter.im/async-fn/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ![asyncFn](https://raw.githubusercontent.com/team-igniter-from-houston-inc/async-fn/master/logo.png)
 

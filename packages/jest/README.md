@@ -1,6 +1,6 @@
 # @asyncFn/jest
 
-![Test status](https://github.com/team-igniter-from-houston-inc/async-fn/workflows/Jest%20integration%20testing/badge.svg) [![npm version](https://badge.fury.io/js/%40async-fn%2Fjest.svg)](https://badge.fury.io/js/%40async-fn%2Fjest) [![Gitter](https://badges.gitter.im/async-fn/community.svg)](https://gitter.im/async-fn/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+![Test status](https://github.com/team-igniter-from-houston-inc/async-fn/workflows/Jest/badge.svg) [![npm version](https://badge.fury.io/js/%40async-fn%2Fjest.svg)](https://badge.fury.io/js/%40async-fn%2Fjest) [![Gitter](https://badges.gitter.im/async-fn/community.svg)](https://gitter.im/async-fn/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ![asyncFn](https://raw.githubusercontent.com/team-igniter-from-houston-inc/async-fn/master/logo.png)
 

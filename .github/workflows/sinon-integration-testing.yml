@@ -1,4 +1,4 @@
-name: Sinon integration testing
+name: Sinon
 
 on:
   push:

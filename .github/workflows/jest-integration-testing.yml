@@ -1,4 +1,4 @@
-name: Jest integration testing
+name: Jest
 
 on:
   push:
