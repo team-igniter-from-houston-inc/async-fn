@@ -1,18 +1,25 @@
 {
   "name": "@async-fn/sinon",
   "version": "1.0.0",
-  "description": "A helper for unit testing to create mocks/spies that can additionally asynchronously resolve and reject while retaining simplicity.",
+  "description": "Additional methods to sinon.spy to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
   "repository": {
     "type": "git",
     "url": "https://github.com/team-igniter-from-houston-inc/async-fn"
   },
   "main": "build/index.js",
   "keywords": [
+    "sinon",
     "async-testing",
-    "js",
-    "unit-testing"
+    "unit-testing",
+    "mock",
+    "mocking",
+    "test",
+    "testing",
+    "tdd",
+    "bdd",
+    "asynchronous"
   ],
-  "author": "Team Igniter from Houston Inc. Consulting",
+  "author": "Team: Igniter from Houston Inc. Consulting",
   "license": "MIT",
   "scripts": {
     "build": "build-async-fn"
