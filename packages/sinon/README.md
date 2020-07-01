@@ -112,6 +112,9 @@ it('does what sinon.spy does', () => {
 });
 ```
 
+## More examples
+Check out the [unit tests](../core/test-utils/itWorksAsAsyncFn.js).
+
 ## Availability
 
 Currently asyncFn is also available for [jest](https://www.npmjs.com/package/@async-fn/jest).

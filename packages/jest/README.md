@@ -113,6 +113,10 @@ it('does what jest.fn does', () => {
 });
 ```
 
+## More examples
+
+Check out the [unit tests](../core/test-utils/itWorksAsAsyncFn.js).
+
 ## Availability
 
 Currently asyncFn is also available for [sinon](https://www.npmjs.com/package/@async-fn/sinon).
