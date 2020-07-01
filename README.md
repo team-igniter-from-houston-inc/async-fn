@@ -8,7 +8,7 @@
 
 This simplifies async unit testing by allowing tests that read chronologically, **[like a story](TUTORIAL.md)**.
 
-asyncFn has zero non-native dependencies. It has **100% unit-test coverage**, and 3+ years of focused **production use** with high **developer satisfaction**.
+asyncFn has zero non-native dependencies. It has **100% unit test coverage**, and 3+ years of focused **production use** with high **developer satisfaction**.
 
 asyncFn is also **integration-tested** for combinations of recent OS-, node- and mocking framework -versions. 
 
