@@ -10,7 +10,7 @@ This simplifies async unit testing by allowing tests that read chronologically, 
 
 The text you are about to consume describes an imaginary dialog between two programmers on their way to discover the _orgastic pleasures_ of **asyncFn**.
 
-Be warned that we'll also cover topics such as TDD, evil pairing, and "negation testing". They are not the main topic here, but some words are spared for them nonetheless to justify way of thinking.
+Be warned that we'll also cover topics such as TDD, evil pairing, and "negation testing". They are not the main topic here, but some words are spared for them nonetheless to justify a way of thinking.
 
 Best of luck, _Dear Reader_.
 
