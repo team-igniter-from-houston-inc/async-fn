@@ -119,7 +119,7 @@ it('does what jest.fn does', () => {
 
 ## More examples
 
-Check out the [unit tests](../core/test-utils/itWorksAsAsyncFn.js).
+Check out the [unit tests](https://github.com/team-igniter-from-houston-inc/async-fn/blob/master/packages/core/test-utils/itWorksAsAsyncFn.js).
 
 ## Availability
 
