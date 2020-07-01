@@ -1,4 +1,4 @@
-# How asyncFn saves lives when unit-testing async code
+# How to unit-test asynchronous code for javascript in 2020
 
 ![asyncFn](https://raw.githubusercontent.com/team-igniter-from-houston-inc/async-fn/master/logo.png)
 
@@ -243,7 +243,7 @@ Contents of `./monsterBeatdown.js` so far:
 >
 > Behold.
 
-### Chapter 4: The asyncFn is beheld
+### Chapter 4: The beholding of asyncFn
 
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
@@ -309,9 +309,9 @@ Contents of `./monsterBeatdown.js` so far:
 
 > **Fry**: Mm-hmm. I see it. I have a good feeling about it. But there's something bothering me with the production code. I see that the tests are all green, but clearly the code does not do anything sensical. It just blows through, merely satisfying the tests.
 
-> **Leela**: You got me there. It's something called evil pairing. If you want to mold the production code your way, you need to order it from the universe by writing a test. Let me show you how.
+> **Leela**: You got me there. It's something called "evil pairing". If you want to mold the production code your way, you need to order it from the universe by writing a test. Let me show you how.
 
-### Chapter 5: The evil is good and negation is positive
+### Chapter 5: Evil is good and negation is positive
 
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
@@ -415,11 +415,15 @@ export default ({ messagePlayer, askPlayerToHit }) => ({
 });
 ```
 
-> **Leela**: There. By adding something we call a "negation test", we forced the production code to make little bit more sense by writing these tests that describe what is not supposed to happen. This is a larger topic, but perhaps we'll cover it somewhere else more in detail.
+> **Leela**: There. I've reduced the "evilness" of the code by adding something we call a "negation tests". By writing tests that describe what is not supposed to happen we forced the production code to make a little bit more sense.
 >
-> Additionally, as a practice, the "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
+> And if you are wondering where the name "evil pairing" comes from, it comes from playing **unit-testing ping-pong** in such a way that the production code is always written in the most evil way, ie. it is non-sensical for real life, yet still makes the tests green. The only way out of this is to force sense in production through unit tests. 
 >
-> But however important this may be, it is slightly off-course. What is relevant is that asyncFn supports evil pairing as line of thinking. Motor on?
+> You can tell coders are evil pairing from the evil laughter.
+>
+> As a practice, this "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
+>
+> But I digress. However important this may be, it is slightly off-course. What is relevant is that asyncFn supports evil pairing as line of thinking. Motor on?
 
 ### Chapter 6: The multiplicity challenge and the enlightenment
 
