@@ -75,26 +75,26 @@ export default ({ messagePlayer }) => ({
 ```javascript
 import gameWithoutDependencies from './monsterBeatdown';
 
-it('when a monster is encountered, informs the player of this', () => {
+it('when a monster is encountered, informs the player of this', async () => {
   const messagePlayerMock = jest.fn();
   const game = gameWithoutDependencies({
     messagePlayer: messagePlayerMock,
   });
 
-  game.encounterMonster();
+  await game.encounterMonster();
 
   expect(messagePlayerMock).toHaveBeenCalledWith(
     'You encounter a monster with 5 hit-points.',
   );
 });
 
-it('when a monster is encountered, asks player to attack', () => {
+it('when a monster is encountered, asks player to attack', async () => {
   const askPlayerToHitMock = jest.fn();
   const game = gameWithoutDependencies({
     askPlayerToHit: askPlayerToHitMock,
   });
 
-  game.encounterMonster();
+  await game.encounterMonster();
 
   expect(askPlayerToHitMock).toHaveBeenCalledWith('Do you want to attack it?');
 });
@@ -116,12 +116,41 @@ it('given a monster is encountered, when player chooses to flee, the monster eat
     'You chose to flee the monster, but the monster eats you in disappointment.',
   );
 });
+
+it('given a monster is encountered, when player chooses to flee, the game is over', async () => {
+  const askPlayerToHitMock = jest.fn(() => Promise.resolve(false));
+
+  const messagePlayerMock = jest.fn();
+
+  const game = gameWithoutDependencies({
+    askPlayerToHit: askPlayerToHitMock,
+    messagePlayer: messagePlayerMock,
+  });
+
+  await game.encounterMonster();
+
+  expect(messagePlayerMock).toHaveBeenCalledWith('Game over.');
+});
 ```
 
 Contents of `./monsterBeatdown.js` so far:
 
 ```javascript
-// no changes, as only tests were refactored.
+export default ({ messagePlayer = () => {}, askPlayerToHit = () => {} }) => ({
+  encounterMonster: () => {
+    // For real life, the implementation below makes little sense.
+    // This is intentional, and is so to prove a point later.
+    messagePlayer('You encounter a monster with 5 hit-points.');
+
+    askPlayerToHit('Do you want to attack it?');
+
+    messagePlayer(
+      'You chose to flee the monster, but the monster eats you in disappointment.',
+    );
+
+    messagePlayer('Game over.');
+  },
+});
 ```
 
 > **Leela**: Hold the phone. I see two problems here. One is the **duplication**, and the other one is about the test describing occurrences in **non-chronological** order, making the test harder to read. Let's start by fixing the first problem.
@@ -146,6 +175,14 @@ describe('given a monster is encountered', () => {
       askPlayerToHit: askPlayerToHitMock,
       messagePlayer: messagePlayerMock,
     });
+  });
+
+  it('informs the player of this', async () => {
+    await game.encounterMonster();
+
+    expect(messagePlayerMock).toHaveBeenCalledWith(
+      'You encounter a monster with 5 hit-points.',
+    );
   });
 
   it('asks player to attack', async () => {
@@ -180,21 +217,7 @@ describe('given a monster is encountered', () => {
 Contents of `./monsterBeatdown.js` so far:
 
 ```javascript
-export default ({ messagePlayer, askPlayerToHit }) => ({
-  encounterMonster: () => {
-    // For real life, the implementation below makes little sense.
-    // This is intentional, and is so to prove a point later.
-    messagePlayer('Game over.');
-
-    messagePlayer('You encounter a monster with 5 hit-points.');
-
-    messagePlayer(
-      'You chose to flee the monster, but the monster eats you in disappointment.',
-    );
-
-    askPlayerToHit('Do you want to attack it?');
-  },
-});
+// no changes, as only tests were refactored.
 ```
 
 > **Fry**: There. Now the duplication for the test setup has been removed, but only to a degree. However, the problem of test not being written in chronological order prevents us from removing all the duplication. See how we are forced to repeat game.encounterMonster(), because askPlayerToHitMock needs to know how to behave **before** it is called.
@@ -227,6 +250,12 @@ describe('given a monster is encountered', () => {
     });
 
     game.encounterMonster();
+  });
+
+  it('informs the player of this', async () => {
+    expect(messagePlayerMock).toHaveBeenCalledWith(
+      'You encounter a monster with 5 hit-points.',
+    );
   });
 
   it('asks player to attack', () => {
@@ -286,6 +315,12 @@ describe('given a monster is encountered', () => {
     });
 
     game.encounterMonster();
+  });
+
+  it('informs the player of this', async () => {
+    expect(messagePlayerMock).toHaveBeenCalledWith(
+      'You encounter a monster with 5 hit-points.',
+    );
   });
 
   it('asks player to attack', () => {
@@ -357,7 +392,7 @@ export default ({ messagePlayer, askPlayerToHit }) => ({
         'You chose to flee the monster, but the monster eats you in disappointment.',
       );
     }
-    
+
     messagePlayer('Game over.');
   },
 });
@@ -390,6 +425,12 @@ describe('given a monster is encountered', () => {
     });
 
     game.encounterMonster();
+  });
+
+  it('informs the player of this', async () => {
+    expect(messagePlayerMock).toHaveBeenCalledWith(
+      'You encounter a monster with 5 hit-points.',
+    );
   });
 
   it('asks player to attack', () => {
@@ -485,7 +526,7 @@ describe('given a monster is encountered', () => {
 Contents of final `./monsterBeatdown.js`:
 
 ```javascript
-export default ({ askPlayerToHit = () => {}, messagePlayer = () => {} }) => ({
+export default ({ askPlayerToHit, messagePlayer }) => ({
   encounterMonster: async () => {
     let monsterHitPoints = 5;
 
