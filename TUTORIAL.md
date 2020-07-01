@@ -140,6 +140,9 @@ export default ({ messagePlayer = () => {}, askPlayerToHit = () => {} }) => ({
   encounterMonster: () => {
     // For real life, the implementation below makes little sense.
     // This is intentional, and is so to prove a point later.
+    // At this point, it suffices that all tests are green
+    messagePlayer('Game over.');
+
     messagePlayer('You encounter a monster with 5 hit-points.');
 
     askPlayerToHit('Do you want to attack it?');
@@ -147,8 +150,6 @@ export default ({ messagePlayer = () => {}, askPlayerToHit = () => {} }) => ({
     messagePlayer(
       'You chose to flee the monster, but the monster eats you in disappointment.',
     );
-
-    messagePlayer('Game over.');
   },
 });
 ```
@@ -398,7 +399,9 @@ export default ({ messagePlayer, askPlayerToHit }) => ({
 });
 ```
 
-> **Leela**: There. By adding something we call a "negation test", we forced the production code to make little bit more sense by writing a test. As a practice, this "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
+> **Leela**: There. By adding something we call a "negation test", we forced the production code to make little bit more sense by writing these tests that describe what is not supposed to happen. This is a larger topic, but perhaps we'll cover it somewhere else more in detail. 
+>
+> Additionally, as a practice, the "evil pairing -mentality" produces code that is very robust for the sake of refactoring, and also helps programmers hone their TDD-mojo a little bit.
 >
 > But however important this may be, it is slightly off-course. What is relevant is that asyncFn supports evil pairing as line of thinking. Motor on?
 
