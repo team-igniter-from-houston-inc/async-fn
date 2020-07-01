@@ -347,7 +347,7 @@ describe('given a monster is encountered', () => {
   });
 
   // This is the "negation test" referred later in narrative.
-  it('when player has not chosen anything yet, the is not eaten', () => {
+  it('when player has not chosen anything yet, the player is not eaten', () => {
     expect(messagePlayerMock).not.toHaveBeenCalledWith(
       'You chose to flee the monster, but the monster eats you in disappointment.',
     );
@@ -479,7 +479,6 @@ describe('given a monster is encountered', () => {
       );
     });
 
-    // Note: This is another negation test.
     it('the game not won', () => {
       expect(messagePlayerMock).not.toHaveBeenCalledWith(
         'You knock out the monster. You are a winner.',
@@ -501,7 +500,7 @@ describe('given a monster is encountered', () => {
 
   describe('when player hits the monster enough times to knock it out', () => {
     beforeEach(async () => {
-      // Here the monster is attacked multiple time, and therefore, askPlayerToHitMock is called multiple times, and then the test resolves it multiple times.
+      // Here the monster is attacked multiple times, and therefore, askPlayerToHitMock is called multiple times, and then the test resolves the mock multiple times.
 
       // Using asyncFn, the logic remains the same: things that happen are written and observed in chronological order.
       await askPlayerToHitMock.resolve(true);
@@ -527,7 +526,6 @@ describe('given a monster is encountered', () => {
       expect(messagePlayerMock).toHaveBeenCalledWith('Game over.');
     });
 
-    // Note: Another negation test.
     it('the game is not lost', () => {
       expect(messagePlayerMock).not.toHaveBeenCalledWith(
         'You chose to flee the monster, but the monster eats you in disappointment.',
@@ -535,7 +533,6 @@ describe('given a monster is encountered', () => {
     });
   });
 
-  // Note: Yet another negation test.
   it('when player hits the monster until it only has 1 hit-point remaining, the game is not over yet', async () => {
     // Hit the monster only 4 times instead of 5.
     await askPlayerToHitMock.resolve(true);
