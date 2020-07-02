@@ -17,6 +17,9 @@ asyncFn is also **integration-tested** for combinations of recent OS-, node- and
 ```
 $ npm install --save-dev @asyncFn/jest
 ```
+## Tutorial
+
+See tutorial [here](https://medium.com/houston-io/how-to-unit-test-asynchronous-code-for-javascript-in-2020-41c124be2552).
 
 ## Examples
 

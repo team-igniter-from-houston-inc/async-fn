@@ -6,7 +6,7 @@
 
 **[asyncFn](https://github.com/team-igniter-from-houston-inc/async-fn)** is a library that provides additional methods to [jest.fn](https://www.npmjs.com/package/@async-fn/jest) or [sinon.spy](https://www.npmjs.com/package/@async-fn/sinon) to introduce "**late resolve**" for the promises returned.
 
-This simplifies async unit testing by allowing tests that read chronologically, **[like a story](TUTORIAL.md)**.
+This simplifies async unit testing by allowing tests that read chronologically, **[like a story](https://medium.com/houston-io/how-to-unit-test-asynchronous-code-for-javascript-in-2020-41c124be2552)**.
 
 asyncFn has zero non-native dependencies. It has **100% unit test coverage**, and 3+ years of focused **production use** with high **developer satisfaction**.
 
@@ -28,7 +28,7 @@ See more details for [jest](./packages/jest/README.md) or [sinon](./packages/sin
 
 ## Tutorial
 
-See tutorial [here](TUTORIAL.md).
+See tutorial [here](https://medium.com/houston-io/how-to-unit-test-asynchronous-code-for-javascript-in-2020-41c124be2552).
 
 ## Examples
 
