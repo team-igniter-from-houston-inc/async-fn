@@ -1,4 +1,4 @@
-# @asyncFn/sinon
+# @async-fn/sinon
 
 ![Test status](https://github.com/team-igniter-from-houston-inc/async-fn/workflows/Sinon/badge.svg) [![npm version](https://badge.fury.io/js/%40async-fn%2Fsinon.svg)](https://badge.fury.io/js/%40async-fn%2Fsinon) [![Gitter](https://badges.gitter.im/async-fn/community.svg)](https://gitter.im/async-fn/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -16,7 +16,7 @@ asyncFn is also **integration-tested** for combinations of recent OS-, node- and
 ## How to install
 
 ```
-$ npm install --save-dev @asyncFn/sinon
+$ npm install --save-dev @async-fn/sinon
 ```
 
 ## Tutorial
@@ -28,7 +28,7 @@ See tutorial [here](https://medium.com/houston-io/how-to-unit-test-asynchronous-
 ### Late resolve for calls to a mock to make tests read like a story
 
 ```javascript
-import asyncFn from '@asyncFn/sinon';
+import asyncFn from '@async-fn/sinon';
 
 it('given called, a result can be resolved *after* the mock is called', async () => {
   const mockFunction = asyncFn();
@@ -46,7 +46,7 @@ it('given called, a result can be resolved *after* the mock is called', async ()
 ### Late resolve for multiple calls to a mock
 
 ```javascript
-import asyncFn from '@asyncFn/sinon';
+import asyncFn from '@async-fn/sinon';
 
 it('given called multiple times, the results can be resolved *after* the mock was called', async () => {
   const mockFunction = asyncFn();
@@ -70,7 +70,7 @@ it('given called multiple times, the results can be resolved *after* the mock wa
 ### Awaiting for coincidences of resolved calls
 
 ```javascript
-import asyncFn from '@asyncFn/sinon';
+import asyncFn from '@async-fn/sinon';
 
 it('can be awaited to test the coincidences of resolve', async () => {
   const mockFunction = asyncFn();
@@ -93,7 +93,7 @@ it('can be awaited to test the coincidences of resolve', async () => {
 ### Late rejection
 
 ```javascript
-import asyncFn from '@asyncFn/sinon';
+import asyncFn from '@async-fn/sinon';
 
 it('can be rejected with a rejection', () => {
   const mockFunction = asyncFn();
@@ -108,7 +108,7 @@ it('can be rejected with a rejection', () => {
 ### The other stuff sinon.spy does
 
 ```javascript
-import asyncFn from '@asyncFn/sinon';
+import asyncFn from '@async-fn/sinon';
 
 it('does what sinon.spy does', () => {
   const mockFunction = asyncFn();

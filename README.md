@@ -15,13 +15,13 @@ asyncFn is also **integration-tested** for combinations of recent OS-, node- and
 ## How to install
 
 ```
-$ npm install --save-dev @asyncFn/jest
+$ npm install --save-dev @async-fn/jest
 ```
 
 or
 
 ```
-$ npm install --save-dev @asyncFn/sinon
+$ npm install --save-dev @async-fn/sinon
 ```
 
 See more details for [jest](./packages/jest/README.md) or [sinon](./packages/sinon/README.md).
