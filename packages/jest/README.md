@@ -1,4 +1,4 @@
-# @asyncFn/jest
+# @async-fn/jest
 
 ![Test status](https://github.com/team-igniter-from-houston-inc/async-fn/workflows/Jest/badge.svg) [![npm version](https://badge.fury.io/js/%40async-fn%2Fjest.svg)](https://badge.fury.io/js/%40async-fn%2Fjest) [![Gitter](https://badges.gitter.im/async-fn/community.svg)](https://gitter.im/async-fn/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -15,7 +15,7 @@ asyncFn is also **integration-tested** for combinations of recent OS-, node- and
 ## How to install
 
 ```
-$ npm install --save-dev @asyncFn/jest
+$ npm install --save-dev @async-fn/jest
 ```
 ## Tutorial
 
@@ -26,7 +26,7 @@ See tutorial [here](https://medium.com/houston-io/how-to-unit-test-asynchronous-
 ### Late resolve for calls to a mock to make tests read like a story
 
 ```javascript
-import asyncFn from '@asyncFn/jest';
+import asyncFn from '@async-fn/jest';
 
 it('given called, a result can be resolved *after* the mock is called', async () => {
   const mockFunction = asyncFn();
@@ -44,7 +44,7 @@ it('given called, a result can be resolved *after* the mock is called', async ()
 ### Late resolve for multiple calls to a mock
 
 ```javascript
-import asyncFn from '@asyncFn/jest';
+import asyncFn from '@async-fn/jest';
 
 it('given called multiple times, the results can be resolved *after* the mock was called', async () => {
   const mockFunction = asyncFn();
@@ -68,7 +68,7 @@ it('given called multiple times, the results can be resolved *after* the mock wa
 ### Awaiting for coincidences of resolved calls
 
 ```javascript
-import asyncFn from '@asyncFn/jest';
+import asyncFn from '@async-fn/jest';
 
 it('can be awaited to test the coincidences of resolve', async () => {
   const mockFunction = asyncFn();
@@ -91,7 +91,7 @@ it('can be awaited to test the coincidences of resolve', async () => {
 ### Late rejection
 
 ```javascript
-import asyncFn from '@asyncFn/jest';
+import asyncFn from '@async-fn/jest';
 
 it('can be rejected with a rejection', () => {
   const mockFunction = asyncFn();
@@ -106,7 +106,7 @@ it('can be rejected with a rejection', () => {
 ### The other stuff jest.fn does
 
 ```javascript
-import asyncFn from '@asyncFn/jest';
+import asyncFn from '@async-fn/jest';
 
 it('does what jest.fn does', () => {
   const mockFunction = asyncFn();
