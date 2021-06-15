@@ -1,5 +1,13 @@
 import flushMicroAndMacroTasks from './flushMicroAndMacroTasks';
 import mockImplementationUsageErrorMessage from './mockImplementationUsageErrorMessage';
+import flow from 'lodash/fp/flow';
+import map from 'lodash/fp/map';
+import get from 'lodash/fp/get';
+import remove from 'lodash/fp/remove';
+import tap from 'lodash/fp/tap';
+
+const pipeline = (data, ...functions) => flow(...functions)(data);
+const mutatingRemove = remove.convert({ immutable: false });
 
 export default ({ mockFunctionFactory }) => (...args) => {
   if (args.length > 0) {
@@ -8,7 +16,7 @@ export default ({ mockFunctionFactory }) => (...args) => {
 
   const callStack = [];
 
-  const asyncFn = mockFunctionFactory(() => {
+  const asyncFn = mockFunctionFactory((...callArguments) => {
     let resolve;
     let reject;
 
@@ -18,12 +26,15 @@ export default ({ mockFunctionFactory }) => (...args) => {
     });
 
     callStack.push({
-      resolve: (...rest) => {
-        resolve(...rest);
+      callArguments,
+
+      resolve: (...resolveArguments) => {
+        resolve(...resolveArguments);
         return flushMicroAndMacroTasks();
       },
-      reject: (...rest) => {
-        reject(...rest);
+
+      reject: (...rejectArguments) => {
+        reject(...rejectArguments);
         return flushMicroAndMacroTasks();
       },
     });
@@ -31,7 +42,7 @@ export default ({ mockFunctionFactory }) => (...args) => {
     return callPromise;
   });
 
-  asyncFn.reject = (...rest) => {
+  asyncFn.reject = (...rejectArguments) => {
     const oldestUnresolvedCall = callStack.shift();
 
     if (!oldestUnresolvedCall) {
@@ -40,10 +51,10 @@ export default ({ mockFunctionFactory }) => (...args) => {
       );
     }
 
-    return oldestUnresolvedCall.reject(...rest);
+    return oldestUnresolvedCall.reject(...rejectArguments);
   };
 
-  asyncFn.resolve = (...rest) => {
+  asyncFn.resolve = (...resolveArguments) => {
     const oldestUnresolvedCall = callStack.shift();
 
     if (!oldestUnresolvedCall) {
@@ -52,8 +63,25 @@ export default ({ mockFunctionFactory }) => (...args) => {
       );
     }
 
-    return oldestUnresolvedCall.resolve(...rest);
+    return oldestUnresolvedCall.resolve(...resolveArguments);
   };
+
+  asyncFn.resolveSpecific = (predicate, ...resolveArguments) =>
+    pipeline(
+      callStack,
+      mutatingRemove(flow(get('callArguments'), predicate)),
+
+      tap((callsToBeResolved) => {
+        if (callsToBeResolved.length === 0) {
+          throw new Error(
+            'Tried to resolve specific asyncFn call that has not been made yet.',
+          );
+        }
+      }),
+
+      map((callToBeResolved) => callToBeResolved.resolve(...resolveArguments)),
+      Promise.all.bind(Promise),
+    );
 
   return asyncFn;
 };

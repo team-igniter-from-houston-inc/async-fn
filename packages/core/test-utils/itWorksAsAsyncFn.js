@@ -1,4 +1,5 @@
 import flushMicroAndMacroTasks from '../src/flushMicroAndMacroTasks';
+import matches from 'lodash/fp/matches';
 
 export default (asyncFn) => {
   it('when a mock function instance is created with arguments, throws', () => {
@@ -52,6 +53,68 @@ export default (asyncFn) => {
         'some-second-value',
         'some-third-value',
       ]);
+    });
+
+    it('given called multiple times, when resolving in specific calls, all returned promises resolve with the specified values', async () => {
+      const firstPromise = mockFunctionInstance({ some: 'parameter' });
+      const secondPromise = mockFunctionInstance({ some: 'other-parameter' });
+
+      mockFunctionInstance.resolveSpecific(
+        matches([{ some: 'other-parameter' }]),
+        'some-second-value',
+      );
+
+      mockFunctionInstance.resolveSpecific(
+        matches([{ some: 'parameter' }]),
+        'some-first-value',
+      );
+
+      const results = await Promise.all([firstPromise, secondPromise]);
+
+      expect(results).toEqual(['some-first-value', 'some-second-value']);
+    });
+
+    it('given called multiple times, when resolving multiple specific calls at the same time, all returned promises resolve with the specified values', async () => {
+      const firstPromise = mockFunctionInstance({ some: 'parameter' });
+      const secondPromise = mockFunctionInstance({ some: 'parameter' });
+
+      mockFunctionInstance.resolveSpecific(
+        matches([{ some: 'parameter' }]),
+        'some-value',
+      );
+
+      const results = await Promise.all([firstPromise, secondPromise]);
+
+      expect(results).toEqual(['some-value', 'some-value']);
+    });
+
+    it('given called multiple times and all calls are resolved specifically, when resolving latest call, throws for call being already resolved', async () => {
+      mockFunctionInstance({ some: 'parameter' });
+      mockFunctionInstance({ some: 'parameter' });
+
+      mockFunctionInstance.resolveSpecific(
+        matches([{ some: 'parameter' }]),
+        'irrelevant',
+      );
+
+      return expect(() => {
+        mockFunctionInstance.resolve();
+      }).toThrow(
+        'Tried to resolve an asyncFn call that has not been made yet.',
+      );
+    });
+
+    it('when resolving specifically call that has not been made, throws', async () => {
+      mockFunctionInstance({ some: 'parameter' });
+
+      return expect(() => {
+        mockFunctionInstance.resolveSpecific(
+          matches([{ some: 'other-parameter' }]),
+          'irrelevant',
+        );
+      }).toThrow(
+        'Tried to resolve specific asyncFn call that has not been made yet.',
+      );
     });
 
     describe('the returned promise', () => {
