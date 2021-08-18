@@ -69,12 +69,14 @@ export default ({ mockFunctionFactory }) => (...args) => {
   asyncFn.resolveSpecific = (predicate, ...resolveArguments) =>
     pipeline(
       callStack,
+
       mutatingRemove(flow(get('callArguments'), predicate)),
 
       tap((callsToBeResolved) => {
         if (callsToBeResolved.length === 0) {
           throw new Error(
-            'Tried to resolve specific asyncFn call that has not been made yet.',
+            'Tried to resolve specific asyncFn call that could not be found. Calls:\n' +
+              JSON.stringify(callStack.map(get('callArguments')), null, 2),
           );
         }
       }),

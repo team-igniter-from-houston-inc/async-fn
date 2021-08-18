@@ -105,7 +105,8 @@ export default (asyncFn) => {
     });
 
     it('when resolving specifically call that has not been made, throws', async () => {
-      mockFunctionInstance({ some: 'parameter' });
+      mockFunctionInstance({ some: 'parameter' }, 'some-second-parameter');
+      mockFunctionInstance('some-parameter-for-second-call');
 
       return expect(() => {
         mockFunctionInstance.resolveSpecific(
@@ -113,7 +114,18 @@ export default (asyncFn) => {
           'irrelevant',
         );
       }).toThrow(
-        'Tried to resolve specific asyncFn call that has not been made yet.',
+        `Tried to resolve specific asyncFn call that could not be found. Calls:
+[
+  [
+    {
+      \"some\": \"parameter\"
+    },
+    \"some-second-parameter\"
+  ],
+  [
+    \"some-parameter-for-second-call\"
+  ]
+]`,
       );
     });
 
