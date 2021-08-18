@@ -5,6 +5,8 @@ import map from 'lodash/fp/map';
 import get from 'lodash/fp/get';
 import remove from 'lodash/fp/remove';
 import tap from 'lodash/fp/tap';
+import isFunction from 'lodash/fp/isFunction';
+import matches from 'lodash/fp/matches';
 
 const pipeline = (data, ...functions) => flow(...functions)(data);
 const mutatingRemove = remove.convert({ immutable: false });
@@ -66,8 +68,12 @@ export default ({ mockFunctionFactory }) => (...args) => {
     return oldestUnresolvedCall.resolve(...resolveArguments);
   };
 
-  asyncFn.resolveSpecific = (predicate, ...resolveArguments) =>
-    pipeline(
+  asyncFn.resolveSpecific = (predicateThing, ...resolveArguments) => {
+    const predicate = isFunction(predicateThing)
+      ? predicateThing
+      : matches(predicateThing);
+
+    return pipeline(
       callStack,
 
       mutatingRemove(flow(get('callArguments'), predicate)),
@@ -84,6 +90,7 @@ export default ({ mockFunctionFactory }) => (...args) => {
       map((callToBeResolved) => callToBeResolved.resolve(...resolveArguments)),
       Promise.all.bind(Promise),
     );
+  };
 
   return asyncFn;
 };

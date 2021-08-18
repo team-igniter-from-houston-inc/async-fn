@@ -55,7 +55,7 @@ export default (asyncFn) => {
       ]);
     });
 
-    it('given called multiple times, when resolving in specific calls, all returned promises resolve with the specified values', async () => {
+    it('given called multiple times, when resolving specific calls with a callback, all returned promises resolve with the specified values', async () => {
       const firstPromise = mockFunctionInstance({ some: 'parameter' });
       const secondPromise = mockFunctionInstance({ some: 'other-parameter' });
 
@@ -66,6 +66,25 @@ export default (asyncFn) => {
 
       mockFunctionInstance.resolveSpecific(
         matches([{ some: 'parameter' }]),
+        'some-first-value',
+      );
+
+      const results = await Promise.all([firstPromise, secondPromise]);
+
+      expect(results).toEqual(['some-first-value', 'some-second-value']);
+    });
+
+    it('given called multiple times, when resolving specific calls with shorthands, all returned promises resolve with the specified values', async () => {
+      const firstPromise = mockFunctionInstance({ some: 'parameter' });
+      const secondPromise = mockFunctionInstance({ some: 'other-parameter' });
+
+      mockFunctionInstance.resolveSpecific(
+        [{ some: 'other-parameter' }],
+        'some-second-value',
+      );
+
+      mockFunctionInstance.resolveSpecific(
+        [{ some: 'parameter' }],
         'some-first-value',
       );
 
