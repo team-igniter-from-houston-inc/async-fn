@@ -30,13 +30,13 @@ export default ({ mockFunctionFactory }) => (...args) => {
     callStack.push({
       callArguments,
 
-      resolve: (...resolveArguments) => {
-        resolve(...resolveArguments);
+      resolve: (resolvedValue) => {
+        resolve(resolvedValue);
         return flushMicroAndMacroTasks();
       },
 
-      reject: (...rejectArguments) => {
-        reject(...rejectArguments);
+      reject: (rejectedValue) => {
+        reject(rejectedValue);
         return flushMicroAndMacroTasks();
       },
     });
@@ -44,7 +44,7 @@ export default ({ mockFunctionFactory }) => (...args) => {
     return callPromise;
   });
 
-  asyncFn.reject = (...rejectArguments) => {
+  asyncFn.reject = (rejectedValue) => {
     const oldestUnresolvedCall = callStack.shift();
 
     if (!oldestUnresolvedCall) {
@@ -53,10 +53,10 @@ export default ({ mockFunctionFactory }) => (...args) => {
       );
     }
 
-    return oldestUnresolvedCall.reject(...rejectArguments);
+    return oldestUnresolvedCall.reject(rejectedValue);
   };
 
-  asyncFn.resolve = (...resolveArguments) => {
+  asyncFn.resolve = (resolvedValue) => {
     const oldestUnresolvedCall = callStack.shift();
 
     if (!oldestUnresolvedCall) {
@@ -65,10 +65,10 @@ export default ({ mockFunctionFactory }) => (...args) => {
       );
     }
 
-    return oldestUnresolvedCall.resolve(...resolveArguments);
+    return oldestUnresolvedCall.resolve(resolvedValue);
   };
 
-  asyncFn.resolveSpecific = (predicateThing, ...resolveArguments) => {
+  asyncFn.resolveSpecific = (predicateThing, resolvedValue) => {
     const predicate = isFunction(predicateThing)
       ? predicateThing
       : matches(predicateThing);
@@ -87,7 +87,7 @@ export default ({ mockFunctionFactory }) => (...args) => {
         }
       }),
 
-      map((callToBeResolved) => callToBeResolved.resolve(...resolveArguments)),
+      map((callToBeResolved) => callToBeResolved.resolve(resolvedValue)),
       Promise.all.bind(Promise),
     );
   };
