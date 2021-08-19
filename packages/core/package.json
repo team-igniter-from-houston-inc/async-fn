@@ -19,7 +19,7 @@
   "author": "Team Igniter from Houston Inc. Consulting",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "timers": "^0.1.1"
   }
 }
