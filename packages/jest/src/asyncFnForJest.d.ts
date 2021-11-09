@@ -7,8 +7,8 @@ declare module "@async-fn/jest" {
       | "mockReturnValue"
       | "mockReturnValueOnce"> &
     {
-      resolve: (resolvedValue: TResolve) => Promise<void>,
-      reject: (rejectValue: TReject) => Promise<void>
+      resolve: (resolvedValue?: TResolve) => Promise<void>,
+      reject: (rejectValue?: TReject) => Promise<void>
     } & ((...args: TArguments) => Promise<TResolve>);
 
   export type {MockedAsyncFn};
