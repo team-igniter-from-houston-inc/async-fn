@@ -1,20 +1,18 @@
-/// <reference types="jest" />
-declare module "@async-fn/jest" {
-  type Awaited<TMaybePromise> = TMaybePromise extends PromiseLike<infer TValue> ? TValue : TMaybePromise;
+declare module '@async-fn/jest' {
+  import type { MockInstance } from 'jest-mock';
 
   type AsyncFnMock<
-    TMockedFunction extends Function,
-    TArguments = Parameters<TMockedFunction>,
-    TResolve = ReturnType<TMockedFunction>,
-  > = jest.MockInstance<TResolve, TArguments> & {
-    resolve: (resolvedValue?: Awaited<TResolve>) => Promise<void>;
+    TToBeMocked extends (...args: unknown[]) => unknown,
+    TArguments extends Parameters<TToBeMocked> = Parameters<TToBeMocked>,
+    TResolve extends ReturnType<TToBeMocked> = ReturnType<TToBeMocked>
+  > = MockInstance<(TArguments) => Promise<TResolve>, TArguments> & {
+    resolve: (resolvedValue: TResolve) => Promise<void>;
     reject: (rejectValue?: any) => Promise<void>;
   } & ((...args: TArguments) => Promise<TResolve>);
 
   export type { AsyncFnMock };
 
-  export default function asyncFn<TResolve, TArguments>(): AsyncFnMock<
-    TResolve,
-    TArguments
-  >;
+  export default function asyncFn<
+    TToBeMocked extends (...args: unknown[]) => unknown
+  >(): AsyncFnMock<TToBeMocked>;
 }
