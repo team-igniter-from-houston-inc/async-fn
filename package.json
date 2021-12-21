@@ -9,6 +9,7 @@
   "scripts": {
     "install-all-packages": "lerna bootstrap",
     "build-all-packages": "lerna run build",
+    "build-and-publish-major-version": "npm run build-all-packages && npm test && lerna publish major --yes --no-push && git push && git push --tags",
     "build-and-publish-minor-version": "npm run build-all-packages && npm test && lerna publish minor --yes --no-push && git push && git push --tags",
     "build-and-publish-patch-version": "npm run build-all-packages && npm test && lerna publish patch --yes --no-push && git push && git push --tags",
     "test": "jest --coverage --coverageReporters=lcov"
