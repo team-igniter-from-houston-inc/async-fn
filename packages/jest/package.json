@@ -1,6 +1,6 @@
 {
   "name": "@async-fn/jest",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Additional methods to jest.fn to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
   "main": "build/index.js",
   "types": "./src/asyncFnForJest.d.ts",
