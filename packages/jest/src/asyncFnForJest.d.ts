@@ -4,7 +4,7 @@ declare module '@async-fn/jest' {
   type AsyncFnMock<
     TToBeMocked extends (...args: unknown[]) => unknown,
     TArguments extends Parameters<TToBeMocked> = Parameters<TToBeMocked>,
-    TResolve extends ReturnType<TToBeMocked> = ReturnType<TToBeMocked>
+    TResolve extends Awaited<ReturnType<TToBeMocked>> = Awaited<ReturnType<TToBeMocked>>
   > = MockInstance<(TArguments) => Promise<TResolve>, TArguments> & {
     resolve: (resolvedValue: TResolve) => Promise<void>;
     reject: (rejectValue?: any) => Promise<void>;
