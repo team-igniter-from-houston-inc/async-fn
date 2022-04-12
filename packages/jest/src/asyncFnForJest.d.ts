@@ -1,4 +1,5 @@
 declare module '@async-fn/jest' {
+  import type { PartialDeep } from 'type-fest';
   import type { MockInstance } from 'jest-mock';
 
   type TentativeTuple<T> = T extends undefined ? [undefined?] : [T];
@@ -11,6 +12,14 @@ declare module '@async-fn/jest' {
     >
   > = MockInstance<(TArguments) => Promise<TResolve>, TArguments> & {
     resolve: (...resolvedValue: TentativeTuple<TResolve>) => Promise<void>;
+
+    resolveSpecific: (
+      callFinder:
+        | PartialDeep<TArguments>
+        | ((parameters: TArguments) => boolean),
+      ...resolvedValue: TentativeTuple<TResolve>
+    ) => Promise<void>;
+
     reject: (rejectValue?: any) => Promise<void>;
   } & ((...args: TArguments) => Promise<TResolve>);
 
