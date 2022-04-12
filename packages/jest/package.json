@@ -1,6 +1,6 @@
 {
   "name": "@async-fn/jest",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "description": "Additional methods to jest.fn to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
   "main": "build/index.js",
   "types": "./src/asyncFnForJest.d.ts",
@@ -28,9 +28,9 @@
   "devDependencies": {
     "@async-fn/core": "^1.4.1",
     "jest": "^27.0.6",
+    "type-fest": "^2.12.2",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
-    "type-fest": "^2.12.2"
+    "webpack-cli": "^3.3.12"
   },
   "peerDependencies": {
     "jest": ">= 24.9.0"
