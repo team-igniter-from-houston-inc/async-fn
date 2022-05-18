@@ -5,12 +5,12 @@ declare module '@async-fn/jest' {
   type TentativeTuple<T> = T extends undefined ? [undefined?] : [T];
 
   type AsyncFnMock<
-    TToBeMocked extends (...args: unknown[]) => unknown,
+    TToBeMocked extends (...args: any[]) => any,
     TArguments extends Parameters<TToBeMocked> = Parameters<TToBeMocked>,
     TResolve extends Awaited<ReturnType<TToBeMocked>> = Awaited<
       ReturnType<TToBeMocked>
-    >
-  > = MockInstance<(TArguments) => Promise<TResolve>, TArguments> & {
+    >,
+  > = MockInstance<(arg: TArguments) => Promise<TResolve>, TArguments> & {
     resolve: (...resolvedValue: TentativeTuple<TResolve>) => Promise<void>;
 
     resolveSpecific: (
@@ -26,6 +26,6 @@ declare module '@async-fn/jest' {
   export type { AsyncFnMock };
 
   export default function asyncFn<
-    TToBeMocked extends (...args: unknown[]) => unknown
+    TToBeMocked extends (...args: any[]) => any,
   >(): AsyncFnMock<TToBeMocked>;
 }
