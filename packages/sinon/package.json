@@ -1,6 +1,6 @@
 {
   "name": "@async-fn/sinon",
-  "version": "1.4.1",
+  "version": "1.6.3",
   "description": "Additional methods to sinon.spy to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
   "repository": {
     "type": "git",
