@@ -1,7 +1,7 @@
 declare module '@async-fn/jest' {
   import type { PartialDeep } from 'type-fest';
 
-  type TentativeTuple<T> = T extends undefined ? [undefined?] : [T];
+  type TentativeTuple<T> = T extends undefined | void ? [undefined?] : [T];
 
   type AsyncFnMock<TToBeMocked extends (...args: any[]) => any> =
     jest.MockedFunction<TToBeMocked> & {
