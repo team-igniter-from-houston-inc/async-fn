@@ -22,7 +22,8 @@
   "author": "Team: Igniter from Houston Inc. Consulting",
   "license": "MIT",
   "scripts": {
-    "build": "build-async-fn"
+    "build": "build-async-fn",
+    "test": "jest --config=./jest.config.js"
   },
   "devDependencies": {
     "@async-fn/core": "^1.4.1"
