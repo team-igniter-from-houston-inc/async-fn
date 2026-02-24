@@ -1,0 +1,46 @@
+{
+  "name": "@async-fn/vitest",
+  "version": "1.6.4",
+  "description": "Additional methods to vi.fn to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
+  "main": "build/index.mjs",
+  "module": "build/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/index.mjs",
+      "default": "./build/index.mjs"
+    }
+  },
+  "types": "./src/asyncFnForVitest.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/team-igniter-from-houston-inc/async-fn"
+  },
+  "keywords": [
+    "vitest",
+    "async-testing",
+    "unit-testing",
+    "mock",
+    "mocking",
+    "test",
+    "testing",
+    "tdd",
+    "bdd",
+    "asynchronous"
+  ],
+  "author": "Team: Igniter from Houston Inc. Consulting",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config=./webpack.config.cjs",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@async-fn/core": "^1.4.1"
+  },
+  "peerDependencies": {
+    "vitest": ">= 1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
