@@ -9,8 +9,6 @@ const fakeTimerConfig = {
     'setInterval',
     'clearTimeout',
     'clearInterval',
-    'setImmediate',
-    'clearImmediate',
     'Date',
   ],
 };
