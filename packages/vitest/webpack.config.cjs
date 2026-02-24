@@ -2,14 +2,23 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
-  target: 'node',
+  target: 'node16',
   mode: 'production',
   externals: ['jest', 'sinon', 'vitest'],
+  experiments: {
+    outputModule: true,
+  },
   output: {
     path: path.resolve(process.cwd(), 'build'),
-    filename: 'index.js',
-    libraryTarget: 'commonjs2',
-    libraryExport: 'default',
+    filename: 'index.mjs',
+    chunkFormat: 'module',
+    library: {
+      type: 'module',
+    },
+  },
+  resolve: {
+    extensions: ['.js', '.json'],
+    fullySpecified: false,
   },
   node: {
     __dirname: true,
@@ -21,6 +30,9 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         options: { cacheDirectory: true, cacheCompression: false },
+        resolve: {
+          fullySpecified: false,
+        },
       },
     ],
   },

@@ -1,36 +1,33 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import itWorksAsAsyncFn from '@async-fn/core/test-utils/itWorksAsAsyncFn';
 
-import asyncFnForJest from './asyncFnForJest';
+import asyncFnForVitest from './asyncFnForVitest';
 
-describe('asyncFn with jest mocks', () => {
-  it('returns a Jest mock function', async () => {
-    const mockFunctionInstance = asyncFnForJest();
+describe('asyncFn with vitest mocks', () => {
+  it('returns a vitest mock function', async () => {
+    const mockFunctionInstance = asyncFnForVitest();
 
-    expect(jest.isMockFunction(mockFunctionInstance));
+    expect(vi.isMockFunction(mockFunctionInstance)).toBe(true);
   });
 
   describe('given fake timers', () => {
     beforeEach(() => {
-      jest.useFakeTimers({ doNotFake: ['performance'] });
+      vi.useFakeTimers();
     });
 
-    afterEach(() => {
-      jest.useRealTimers();
-    });
-
-    itWorksAsAsyncFn(asyncFnForJest);
+    itWorksAsAsyncFn(asyncFnForVitest);
   });
 
   describe('given real timers', () => {
     beforeEach(() => {
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
-    itWorksAsAsyncFn(asyncFnForJest);
+    itWorksAsAsyncFn(asyncFnForVitest);
   });
 
   describe('given no timers', () => {
-    itWorksAsAsyncFn(asyncFnForJest);
+    itWorksAsAsyncFn(asyncFnForVitest);
   });
 
   [
@@ -40,7 +37,7 @@ describe('asyncFn with jest mocks', () => {
     'mockReturnValueOnce',
   ].forEach((restrictedMethodName) => {
     it(`when setting mock implementation with "${restrictedMethodName}", throws`, () => {
-      const mockFunctionInstance = asyncFnForJest();
+      const mockFunctionInstance = asyncFnForVitest();
 
       expect(
         () => void mockFunctionInstance[restrictedMethodName](() => {}),

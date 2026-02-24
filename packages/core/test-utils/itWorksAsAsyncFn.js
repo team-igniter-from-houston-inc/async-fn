@@ -167,12 +167,14 @@ export default (asyncFn) => {
       });
 
       it('does not resolve without using the mock function', async () => {
-        const callback = jest.fn();
+        let called = false;
 
-        promise.then(callback);
+        promise.then(() => {
+          called = true;
+        });
         await flushMicroAndMacroTasks();
 
-        expect(callback).not.toHaveBeenCalled();
+        expect(called).toBe(false);
       });
 
       it('resolves multiple levels of chained then-calls containing synchronous functions', async () => {
@@ -205,38 +207,37 @@ export default (asyncFn) => {
       });
 
       it('given a non-resolved promise, does not resolve beyond the unresolved promise in a chain of then-calls', async () => {
-        const callbackBeforeNonResolvedPromise = jest.fn();
-        const callbackAfterNonResolvedPromise = jest.fn();
+        let valueBeforeNonResolvedPromise;
+        let calledAfterNonResolvedPromise = false;
 
         promise
           .then((x) => x)
-          .then(callbackBeforeNonResolvedPromise)
+          .then((x) => {
+            valueBeforeNonResolvedPromise = x;
+            return x;
+          })
           .then(() => new Promise(() => {}))
-          .then(callbackAfterNonResolvedPromise);
+          .then(() => {
+            calledAfterNonResolvedPromise = true;
+          });
 
         await mockFunctionInstance.resolve('some-value');
 
-        expect(callbackBeforeNonResolvedPromise).toHaveBeenCalledWith(
-          'some-value',
-        );
-
-        expect(callbackAfterNonResolvedPromise).not.toHaveBeenCalled();
+        expect(valueBeforeNonResolvedPromise).toBe('some-value');
+        expect(calledAfterNonResolvedPromise).toBe(false);
       });
 
-      it('resolves so that asynchronous Jest asserts work using returned promise', () => {
+      it('resolves so that asynchronous asserts work using returned promise', () => {
         mockFunctionInstance.resolve('foo');
 
         return expect(promise).resolves.toBe('foo');
       });
 
-      it('resolves so that asynchronous Jest asserts work using the done-function', (done) => {
+      it('resolves so that asynchronous asserts work using chained then-calls', async () => {
         mockFunctionInstance.resolve('foo');
 
-        promise
-          .then((value) => {
-            expect(value).toBe('foo');
-          })
-          .then(done);
+        const value = await promise.then((v) => v);
+        expect(value).toBe('foo');
       });
 
       it('resolves so that async/await works', async () => {

@@ -13,14 +13,14 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-        node-version: [14.x, 16.x, 18.x]
-        jest-version: [28.x, 27.x, 26.x, 25.x, 24.x]
+        node-version: [18.x, 20.x, 22.x]
+        jest-version: [27.x, 28.x, 29.x, 30.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -29,6 +29,11 @@ jobs:
           npm ci
           npm install jest@${{ matrix.jest-version }} --save-dev
           npm run install-all-packages
+
+      - name: Build
+        run: npm run build-all-packages
+        env:
+          CI: true
 
       - name: Run tests
         run: npm run test
