@@ -9,23 +9,19 @@ describe('asyncFn with jest mocks', () => {
     expect(jest.isMockFunction(mockFunctionInstance));
   });
 
-  describe('given "modern" fake timers', () => {
+  describe('given fake timers', () => {
     beforeEach(() => {
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers({ doNotFake: ['performance'] });
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
     });
 
     itWorksAsAsyncFn(asyncFnForJest);
   });
 
-  describe('given "legacy" fake timers', () => {
-    beforeEach(() => {
-      jest.useFakeTimers('legacy');
-    });
-
-    itWorksAsAsyncFn(asyncFnForJest);
-  });
-
-  describe('given real fake timers', () => {
+  describe('given real timers', () => {
     beforeEach(() => {
       jest.useRealTimers();
     });

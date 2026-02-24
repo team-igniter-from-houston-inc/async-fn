@@ -3,6 +3,18 @@ import itWorksAsAsyncFn from '@async-fn/core/test-utils/itWorksAsAsyncFn';
 
 import asyncFnForSinon from './asyncFnForSinon';
 
+const fakeTimerConfig = {
+  toFake: [
+    'setTimeout',
+    'setInterval',
+    'clearTimeout',
+    'clearInterval',
+    'setImmediate',
+    'clearImmediate',
+    'Date',
+  ],
+};
+
 describe('asyncFn with sinon spies', () => {
   it('returns a sinon spy function', async () => {
     const mockFunctionInstance = asyncFnForSinon();
@@ -11,8 +23,14 @@ describe('asyncFn with sinon spies', () => {
   });
 
   describe('given fake timers', () => {
+    let clock;
+
     beforeEach(() => {
-      sinon.useFakeTimers();
+      clock = sinon.useFakeTimers(fakeTimerConfig);
+    });
+
+    afterEach(() => {
+      clock.restore();
     });
 
     itWorksAsAsyncFn(asyncFnForSinon);
