@@ -1,14 +1,10 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "version": "1.6.5",
-  "packages": [
-    "packages/*"
-  ],
+  "version": "1.7.0",
+  "packages": ["packages/*"],
   "command": {
     "publish": {
-      "ignoreChanges": [
-        "ignored-file"
-      ],
+      "ignoreChanges": ["ignored-file"],
       "message": "Publish %s"
     }
   }

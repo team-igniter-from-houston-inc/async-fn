@@ -1,6 +1,6 @@
 {
   "name": "@async-fn/bun",
-  "version": "1.6.5",
+  "version": "1.7.0",
   "description": "Additional methods to bun:test mock to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
   "main": "build/index.mjs",
   "module": "build/index.mjs",
@@ -36,7 +36,7 @@
     "test": "bun test"
   },
   "devDependencies": {
-    "@async-fn/core": "^1.4.1"
+    "@async-fn/core": "^1.7.0"
   },
   "peerDependencies": {
     "bun": ">= 1.0.0"
