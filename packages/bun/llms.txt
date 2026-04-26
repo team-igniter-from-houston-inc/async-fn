@@ -1,0 +1,8 @@
+# @async-fn/bun
+
+> Late-resolve async mocks for Bun. `asyncFn()` returns a `bun:test` `mock`-compatible mock whose returned promise resolves from the test body, after the system under test has called it. This lets tests read chronologically.
+
+## Documentation
+
+- [LLM Usage](./LLM_USAGE.md): compact API reference with examples
+- [README](./README.md): full tutorial and rationale
