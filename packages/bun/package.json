@@ -1,0 +1,47 @@
+{
+  "name": "@async-fn/bun",
+  "version": "1.6.5",
+  "description": "Additional methods to bun:test mock to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
+  "main": "build/index.mjs",
+  "module": "build/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/asyncFnForBun.d.ts",
+      "import": "./build/index.mjs",
+      "default": "./build/index.mjs"
+    }
+  },
+  "types": "./src/asyncFnForBun.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/team-igniter-from-houston-inc/async-fn"
+  },
+  "keywords": [
+    "bun",
+    "async-testing",
+    "unit-testing",
+    "mock",
+    "mocking",
+    "test",
+    "testing",
+    "tdd",
+    "bdd",
+    "asynchronous"
+  ],
+  "author": "Team: Igniter from Houston Inc. Consulting",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config=./webpack.config.cjs",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@async-fn/core": "^1.4.1"
+  },
+  "peerDependencies": {
+    "bun": ">= 1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
