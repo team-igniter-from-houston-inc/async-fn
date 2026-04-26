@@ -6,8 +6,11 @@
     "type": "git",
     "url": "https://github.com/team-igniter-from-houston-inc/async-fn"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "install-all-packages": "lerna bootstrap",
+    "install-all-packages": "npm install",
     "build-all-packages": "lerna run build",
     "build-and-publish-major-version": "npm run build-all-packages && npm test && lerna publish major --yes --no-push && git push && git push --tags",
     "build-and-publish-minor-version": "npm run build-all-packages && npm test && lerna publish minor --yes --no-push && git push && git push --tags",
@@ -24,7 +27,7 @@
     "babel-jest": "^28.1.2",
     "babel-loader": "^8.2.5",
     "jest": "^28.1.2",
-    "lerna": "^5.1.8",
+    "lerna": "^9.0.7",
     "lodash": "^4.17.21",
     "prettier": "^2.7.1",
     "sinon": "^9.0.2",

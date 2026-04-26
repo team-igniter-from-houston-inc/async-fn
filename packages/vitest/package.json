@@ -1,6 +1,6 @@
 {
   "name": "@async-fn/vitest",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Additional methods to vi.fn to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
   "main": "build/index.mjs",
   "module": "build/index.mjs",
