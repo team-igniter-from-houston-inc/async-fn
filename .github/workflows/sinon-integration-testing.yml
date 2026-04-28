@@ -37,5 +37,6 @@ jobs:
 
       - name: Run tests
         run: npm run test
+        working-directory: ./packages/sinon
         env:
           CI: true
