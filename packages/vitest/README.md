@@ -9,6 +9,17 @@ This simplifies async unit testing by allowing tests that read chronologically, 
 ```
 $ npm install --save-dev @async-fn/vitest
 ```
+
+In your `vitest.config.js` ensure that you have the following configuration. This is required when using `vi.mock(<some-module>)`.
+
+```js
+export default defineConfig({
+  test: {
+    clearMocks: true,
+  }
+})
+```
+
 ## Examples
 
 ### Late resolve for calls to a mock to make tests read like a story
