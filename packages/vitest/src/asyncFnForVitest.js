@@ -8,6 +8,7 @@ import { vi } from 'vitest';
 export default (...args) => {
   const mockFunctionInstance = asyncFnFor({
     mockFunctionFactory: vi.fn,
+    callstackLocation: (mockFn) => mockFn.mock.calls,
   })(...args);
 
   mockFunctionInstance.mockImplementation = throwMockImplementationUsageError;
