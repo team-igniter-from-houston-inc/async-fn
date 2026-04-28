@@ -29,7 +29,7 @@
     "@async-fn/core": "^1.7.0"
   },
   "peerDependencies": {
-    "sinon": "^9.0.2"
+    "sinon": ">= 9.0.0"
   },
   "publishConfig": {
     "access": "public"
