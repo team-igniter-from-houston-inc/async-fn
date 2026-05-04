@@ -1,6 +1,6 @@
 {
   "name": "@async-fn/sinon",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Additional methods to sinon.spy to introduce \"late resolve\" of promises returned by mock functions. This allows tests that read chronologically, like a story.",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "test": "jest --config=./jest.config.js"
   },
   "devDependencies": {
-    "@async-fn/core": "^1.7.0"
+    "@async-fn/core": "^1.8.0"
   },
   "peerDependencies": {
     "sinon": ">= 9.0.0"
